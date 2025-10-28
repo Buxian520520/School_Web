@@ -48,3 +48,48 @@
     height: 95px;
 }
 
+.news-ul{
+    margin-bottom: 100px;
+}
+
+.showdiv{
+    height: 438px;
+    width: 100%;
+    margin: 57px 0;
+
+}
+
+.showdiv .flow-pic{
+    position: relative;
+    display: flex;
+    height: 324px;
+    background-color: #f1f0ea;
+}
+
+.showdiv .flow-pic .left,
+.showdiv .flow-pic .right
+{
+    width: 458px;
+    height: 231px;
+}
+.showdiv .flow-pic{
+    display: flex;
+    justify-content: space-around;
+    padding: 35px 0;
+}
+.showdiv .flow-pic img{
+    width: 458px;
+    height: 185px;
+}
+
+.showdiv .flow-pic .button {
+    position: absolute;
+    width: 142px;
+    height: 28px;
+    background-color: rgb(0, 88, 28);
+    right: 20px;
+    bottom: -14px;
+}
+
+
+
