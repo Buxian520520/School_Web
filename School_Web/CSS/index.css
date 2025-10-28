@@ -2,6 +2,11 @@
     padding: 0;
     margin: 0;
 }
+html{
+    border-radius: 100px;
+    background-image: url(../img/temple.png);
+    background-repeat: no-repeat;
+}
 
 a{
     text-decoration: none;
@@ -13,8 +18,12 @@ li{
     position: relative;
     height: 1684px;
     width: 100%;
-    background-color: pink;
+    /* background-color: pink; */
+
 }
+
+
+
 .header .nav{
     position: fixed;
     /* position: absolute; */
@@ -110,30 +119,73 @@ li{
     align-items: center;
 }
 
-.nav .bottom .right .outmenu li{
-    /* display: flex; */
-    margin-left: 30px;
-    margin-bottom: 20px;
-    position: relative;
+
+.nav .bottom .right .outmenu{
+    background-color: pink;
+
 }
 
+
+.nav .bottom .right .outmenu li{
+    /* display: flex; */
+    /* padding-top: 20px; */
+    min-width: 120px;
+    height: 60px;
+    /* margin-left: 30px; */
+    /* margin-bottom: 20px; */
+    position: relative;
+    align-content: center;
+
+}
+
+.nav .bottom .right .outmenu li:hover .submenu{
+    display: block;
+}
+
+/* 给i元素添加inline-block，确保transform生效 */
+.nav .bottom .right .outmenu li a i {
+  display: inline-block; /* 关键：让i元素能承载旋转 */
+  transition: all 0.3s; /* 过渡效果 */
+  vertical-align: middle; /* 可选：让图标与文字对齐 */
+}
+
+/* hover时触发旋转 */
+.nav .bottom .right .outmenu li:hover a i {
+  transform: rotate(180deg); /* 旋转180度 */
+}
 .nav .bottom .right .submenu{
     position: absolute;
     width: 100%;
-    top: 100%;
+    height: 40px;
+    top: 40px;
     left: 0;
     display: block;
     margin-top: 20px;
+    display: none;
+    border-top: 2.5px solid rgb(0,88,38);
 }
 .nav .bottom .right .submenu li{
     width: 100%;
-    height: 40px;
+    height: 35px;
     text-align: center;
     margin: 0;
-
+    line-height: 35px;
+    background-color: white;
 
 }
-.nav .bottom .right .submenu li a{
+.nav .bottom .right .submenu li:last-child{
+
+        padding-bottom: 15px;
+
+}
+
+.nav .bottom .right  .outmenu a
+{
     margin: 0;
+    color: white;
+}
+.nav .bottom .right  .submenu a{
+    color: green;
+    line-height: 40px;
 }
 

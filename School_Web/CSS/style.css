@@ -1,0 +1,50 @@
+.b-wrapper{
+    margin: 0 auto; 
+    width: 1028px;
+
+}
+.news {
+   height: 400px; 
+}
+
+.news .items{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.news .left {
+    height: 356px;
+    width: 566px;
+
+}
+.news .left img{
+    width: 566px;
+    height: 355px;
+}
+
+.news .right .txt {
+    width: 432px;
+    height: 256px;
+    margin-left: 20px;
+}
+
+.news ul{
+    display: flex;
+    justify-content: space-between;
+
+}
+.news ul li{
+    display: flex;
+    width: 345px;
+    height: 110px;
+}
+.news ul li img{
+    width: 151px;
+    height: 95px;
+}
+.news ul li .txt{
+    width: 186px;
+    height: 95px;
+}
+
