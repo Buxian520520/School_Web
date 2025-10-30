@@ -3,9 +3,44 @@
     margin: 0;
 }
 html{
-    border-radius: 100px;
-    background-image: url(../img/temple.png);
+    height: 100%;
     background-repeat: no-repeat;
+    overflow: hidden; 
+
+}
+
+
+ body {
+    height: 100%;
+    overflow: hidden; 
+ }
+
+  .pages-container {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+      scrollbar-width: none; /* 隐藏滚动条 */
+
+  }
+
+  .page {
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+  }
+
+.page.home {
+    background-image: url("../img/autumn.png"); /* 替换为实际bgi图片路径 */
+    background-size: cover; /* 根据需要调整背景大小适配方式 */
+    background-position: center; /* 背景居中显示 */
+}
+
+.page.next{
+    overflow-y: auto;
+}
+
+body::-webkit-scrollbar {
+  display: none; /* 隐藏滚动条 */
 }
 
 a{
@@ -14,32 +49,74 @@ a{
 li{
     list-style: none;
 }
+
+
 .header{
     position: relative;
     height: 1684px;
     width: 100%;
     /* background-color: pink; */
-    z-index: 9999;
+    z-index: 100;
+
 
 }
+
+
+    @keyframes bounceUp {
+      0% { transform: translateY(0); }
+      30% { transform: translateY(-32px); } 
+      100% { transform: translateY(0); } 
+    }
+
+        .nav.animate {
+      /* animation: bounceUp 1s ease forwards; */
+        animation: bounceUp 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+
+    }
+
+
+
 
 
 
 .header .nav{
     position: fixed;
-    /* position: absolute; */
     top: 0;
     height: 92px;
     width: 100%;
+    /* background-image: url(../img/head-cover.png); */
+    transition: all 0.3s ease;
+
 }
+
+.header .nav::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(../img/head-cover.png);
+    transform: scaleY(-1); 
+    z-index: -1; 
+}
+
+.header .nav.hide-bg::before {
+  display: none; 
+  /* 或用 opacity: 0;  */
+}
+
 .header .top{
     height: 32px;
-    background-color: green;
+}
+.header .top a{
+    color: white;
+
 }
 
 .header .bottom{
     height: 60px;
-    background-color: lightblue;
+    /* background-color: lightblue; */
 }
 
 .header img{
@@ -70,6 +147,24 @@ li{
     text-align: center;
     
 }
+
+/* .head-cover{
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    top: 0;
+    left: 0;
+} */
+/* .head-cover{
+    position: absolute; 
+    background-image: url(../img/head-cover.png);
+    width: 100%;
+    height: 95px;
+    top: 0;
+    left: 0;
+    z-index: 0; 
+    transform: scaleY(-1);
+} */
 
 
 
@@ -108,11 +203,6 @@ li{
     padding-right: 15px;
 
 }
-.nav .bottom ul{
-    /* display: flex;
-    align-items: center; */
-    /* align-items: center; */
-}
 
 .nav .bottom .right{
     display: flex;
@@ -121,10 +211,10 @@ li{
 }
 
 
-.nav .bottom .right .outmenu{
+/* .nav .bottom .right .outmenu{
     background-color: pink;
 
-}
+} */
 
 
 .nav .bottom .right .outmenu li{
@@ -132,8 +222,6 @@ li{
     /* padding-top: 20px; */
     min-width: 120px;
     height: 60px;
-    /* margin-left: 30px; */
-    /* margin-bottom: 20px; */
     position: relative;
     align-content: center;
 

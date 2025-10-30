@@ -7,16 +7,22 @@
     <link rel="stylesheet" href="./CSS/index.css">
     <link rel="stylesheet" href="./iconfont/iconfont.css">
     <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="stylesheet" href="./CSS/animation.css">
+
+
 </head>
 <body>
-    
+      <div class="pages-container">
+    <section class="page home">
 
+       <div class="header">
 
-    <div class="header">
         <a href="#">
             <img src="" alt="">
         </a>
         <div class="nav">
+         <div class="head-cover"></div>
+
             <div class="top total">
                 <div class="left">
                     <div></div>
@@ -129,11 +135,24 @@
             </div>
         </div>
     </div>
+    </section>
+    <section class="page next">
+        <div class="news-shadow">
+<div class="news b-wrapper">
 
+            <div class="title ">
+                        <div class="left">
+                        <h3>理工新闻</h3>
 
-    <section>
-        <div class="news b-wrapper">
-            <p>理工新闻</p>
+                        </div>
+                        <div class="right">
+                            <a href="">
+                                查看更多
+                                <i class="iconfont icon-arrowrighto"></i>
+                            </a>
+                        </div>
+                    </div>
+
             <div class="items">
                 <div class="left">
                     <a href="">
@@ -177,11 +196,37 @@
             </ul>
         </div>
 
+        </div>
+        
+
         <div class="showdiv">
             <div class="flow-pic b-wrapper">
 
-                <div class="left">
-                    
+
+
+                <ul>
+                    <li>
+                        <img src="./img/news1.png" alt="">
+                        <p>p1</p>
+                    </li>
+                    <li>
+                        <img src="./img/news1.png" alt="">
+                        <p>p2</p>
+                    </li>
+                    <li>
+                        <img src="./img/news1.png" alt="">
+                        <p>p3</p>
+                    </li>
+                    <li>
+                        <img src="./img/news1.png" alt="">
+                        <p>p4</p>
+                    </li>
+                    <li>
+                        <img src="./img/news1.png" alt="">
+                        <p>p5</p>
+                    </li>
+                </ul>
+
                     <img src="./img/news1.png" alt="">
                     <p>p1</p>
                 </div>
@@ -189,20 +234,23 @@
                     
                     <img src="./img/news1.png" alt="">
                     <p>p2</p>
-                </div>
+                </div> 
                 <div class="button">
                     <div class="left">
-                        <i class="iconfont"><--</i>
+                        <i class="iconfont icon-direction-left"></i>
                     </div>
                     <span class="txt">
                         1/4
                     </span>
                     <div class="right">
-                        <i class="iconfont">--></i>
+                        <i class="iconfont icon-direction-right"></i>
                     </div>
                 </div>
             </div>
         </div>
+                <!-- <div class="left">
+                    
+
 
 
         <div class="data-bgc">
@@ -477,11 +525,7 @@
             </div>
         </div>
     </div>
-
-
-    </section>
-
-    <div class="footer">
+        <div class="footer">
         <div class="shallow ">
             <div class="wp b-wrapper">
 
@@ -498,5 +542,113 @@
 
         </div>
     </div>
+
+
+    </section>   
+  </div>
+
+  <script>
+    const container = document.querySelector('.pages-container');
+    let currentPage = 0; // 当前页面索引（0=首页，1=下一页）
+    let totalScroll = 0;
+    const totalPages = document.querySelectorAll('.page').length;
+    let isAnimating = false; // 动画状态锁，防止频繁触发
+
+    const nav = document.querySelector(".nav");
+    const headtop = document.querySelector(".nav .top");
+    const topBlockBottom = 16000; // 顶部区块底部位置
+
+    // 监听鼠标滚轮事件
+    container.addEventListener('wheel', (e) => {
+        // 如果正在执行动画，直接忽略
+        if (isAnimating) {
+            e.preventDefault();
+            return;
+        }
+
+        // 当在第二页且可以继续滚动时，优先处理页面内滚动
+        if (currentPage === 1) {
+            const nextPage = document.querySelector('.page.next');
+            // 顶部边界：不能向上滚动时再响应页面切换
+            const atTop = nextPage.scrollTop === 0 && e.deltaY < 0;
+            // 底部边界：不能向下滚动时再响应页面切换（如果有更多页面）
+            const atBottom = nextPage.scrollHeight - nextPage.scrollTop <= nextPage.clientHeight && e.deltaY > 0;
+            
+            if (!atTop && !atBottom) {
+                return; // 让页面内自然滚动
+            }
+        }
+
+        e.preventDefault(); // 阻止默认滚动行为
+
+        // 滚轮向下滚动（进入下一页）
+        if (e.deltaY > 0 && currentPage < totalPages - 1) {
+            isAnimating = true; // 锁定动画状态
+            currentPage++;
+            totalScroll += e.deltaY;
+            
+            // 应用导航动画
+            nav.classList.add('animate');
+            nav.classList.add('hide-bg');
+            nav.classList.add('next');
+            
+            // 滚动到目标页面
+            container.scrollTo({
+                top: currentPage * window.innerHeight,
+                behavior: 'smooth'
+            });
+            
+            // 动画完成后移除临时类并解锁
+            setTimeout(() => {
+                nav.classList.remove('animate');
+                nav.classList.add('solid');
+                totalScroll = 0;
+                isAnimating = false;
+            }, 1000);
+        }
+        // 滚轮向上滚动（返回上一页）
+        else if (e.deltaY < 0 && currentPage > 0) {
+            isAnimating = true; // 锁定动画状态
+            currentPage--;
+            totalScroll += e.deltaY;
+            
+            nav.classList.remove('hide-bg');
+            nav.classList.remove('next');
+            
+            // 滚动到目标页面
+            container.scrollTo({
+                top: currentPage * window.innerHeight,
+                behavior: 'smooth'
+            });
+            
+            // 达到滚动阈值时执行动画
+            if (Math.abs(totalScroll) >= topBlockBottom) {
+                nav.classList.add('animate');
+                
+                setTimeout(() => {
+                    nav.classList.remove('animate');
+                    nav.classList.remove('solid');
+                    totalScroll = 0;
+                    isAnimating = false;
+                }, 800);
+            } else {
+                // 未达到阈值直接解锁
+                setTimeout(() => {
+                    isAnimating = false;
+                }, 100);
+            }
+        }
+    });
+
+    // 监听滚动事件完成，确保动画状态正确
+    container.addEventListener('scrollend', () => {
+        isAnimating = false; // 滚动结束后强制解锁
+    });
+</script>
+
+
+
+
+
 </body>
 </html>
