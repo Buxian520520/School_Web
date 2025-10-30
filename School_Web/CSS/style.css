@@ -1,3 +1,7 @@
+*{
+    padding: 0;
+    margin: 0;
+}
 .b-wrapper{
     margin: 0 auto; 
     width: 1028px;
@@ -83,13 +87,482 @@
 }
 
 .showdiv .flow-pic .button {
+    display: flex;
+    justify-content: space-between;
     position: absolute;
     width: 142px;
     height: 28px;
     background-color: rgb(0, 88, 28);
     right: 20px;
     bottom: -14px;
+
+}
+
+.showdiv .flow-pic .button .left,
+.showdiv .flow-pic .button .right{
+    width: 43px;
+    height: 28px;
+}
+
+.data-bgc{
+    position: relative;
+    height: 908px;
+    /* width: 100%; */
+    background-image: url(/School_Web/img/data-bgc.png);
+}
+.data-head{
+    width: 1028px;
+    height: 335px;
+    /* position: absolute; */
+    top: 0;
+    margin: 0 auto;
+}
+.data-head h3{
+    color: #fff;
+    font-size:34px ;
+    font-family: '微软雅黑','黑体';
+    padding: 21px 0 0;
+    margin: 0 0 35px;
+}
+
+.data-head ul {
+    display: flex;
+    width: 1028px;
+    flex-wrap: wrap;
+}
+
+.data-head ul li{
+    width: 257px;
+    height: 79px;
+    margin: 0 0 28px;
+
+}
+.data-head ul li span{
+    color: #fff;
+    font-size: 50px;
+    margin: 0 0 11px;
+}
+.data-head ul li p{
+    color: #fff;
+    font-size: 11px;
+    font-family: "微软雅黑","黑体";
+}
+ .data-view{
+    display: flex;
+    position: relative;
+}
+ .data-view .title{
+    width: 774px;
+    height: 45px;
+    color: #fff;
+    font-size: 34px;
+    margin: 0 0 25px;
+}
+
+.data-bgc .wp{
+    /* position: absolute; */
+    position: relative;
+    width: 674px;
+    height: 572px;
+    left: 0;
+    bottom: 0;
+    background-color: #ffffffa8;
+}
+.data-bgc .data-bd{
+    position: absolute;
+    width: 1347px;
+    height: 388px;
+    padding: 21px 21px 21px 0;
+    bottom: 80px;
+    left: 50%; 
+    transform: translateX(-50%);
+}
+
+.data-bd ul{
+    display: flex;
+    padding: 21px 21px 21px 0;
+    justify-content: space-between;
+}
+.data-bd ul li{
+    padding: 0 0 0 21px;
+}
+.data-bd ul li:first-child{
+    transform: scale(1.22);
+}
+
+.data-bd ul img{
+    width: 378px;
+    height: 235px;
+
+}
+.data-bd ul li h4{
+    color: #333;
+    font-size:  14px;
+    font-family: "微软雅黑","黑体";
+    margin: 0 0 7px;
+
+}
+.data-bd ul li .mask{
+    color: #333;
+    background-color: #fff;
+    padding: 12px 14px;
+
+}
+.data-bd ul li p{
+    color: #005826;
+    font-size: 11.5px;
+
+}
+.data-view .wp .button{
+    display: flex;
+    position: absolute;
+    right: -50px;
+    bottom: 40px;
+}
+.data-view .wp .button .left,
+.data-view .wp .button .right
+{
+    width: 50px;
+    height: 42px;
+    font-size: 18px;
+    text-align: center;
+    /* align-content: center; */
+    line-height: 38px;
+    cursor: pointer;
+}
+.data-view .wp .button .left{
+    background-color: #ECC474;
+    color: #fff;
+}
+
+.data-view .wp .button .right{
+    background-color: #fff;
+    color: black;
+}
+
+
+.study-shadow{
+    height:556px ;
+    background-color: #f3f3f3;
+    padding: 57px 0;
+}
+
+.study-shadow .title{
+    /* margin: 0 0 36px; */
+    display: flex;
+    justify-content: space-between;
+    height: 45px;
+    margin-bottom: 36px;
+}
+.study-shadow .title  h3{
+    color: #005826;
+    font-size: 34px;
+}
+.study-shadow .title .right {
+    width: 68px;
+    height: 45px;
+}
+.study-shadow .title .right a{
+    height: 18px;
+    font-size: 11.5px;
+    line-height: 45px;
+    color: #888;
+
+    
+}
+.study-shadow .title .right i{
+    font-size: 9px;
+    line-height: 16px;
 }
 
 
 
+.study-shadow .bd{
+    display: flex;
+    height: 361px;
+    justify-content: space-between;
+}
+.study-shadow .bd .left img{
+    width: 576px;
+    height: 361px;
+
+}
+.study-shadow .bd .right {
+    width: 432px;
+    height: 361px;
+}
+.study-shadow .bd .right li{
+    position: relative;
+    display: flex;
+    width: 420px;
+    /* max-height: 120px; */
+    background-color: #fff;
+    padding: 9px 7px;
+}
+
+.study-shadow .bd .right li::before {
+  content: "";
+  position: absolute;
+  left: -10px; /* 调整水平位置，使三角形与文本对齐 */
+  top: 50%;
+  transform: translateY(-50%); /* 垂直居中 */
+  
+  width: 0;
+  height: 0;
+  
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 6.4px solid #005926; /* 颜色与原设计一致，尺寸可按需调整 */
+}
+
+.study-shadow .bd .right img{
+    width: 162px;
+    height: 101px;
+}
+
+.study-shadow .bd .right li .txt{
+    width: 255px;
+    height: 101px;
+}
+
+.radio-shadow{
+    height: 614px;
+    margin:  62px 0 0;
+    padding: 28px 0 21px;
+    /* line-height: 0; */
+}
+.radio-shadow .top {
+    display: flex;
+    width: 1028px;
+    height: 336px;
+    margin-bottom: 0; /* 强制清除底部间距 */
+    padding-bottom: 0;
+
+}
+.radio-shadow .top .left{
+      display: flex;
+    flex-direction: column; /* 主轴改为垂直方向 */
+    justify-content: space-between; /* 垂直方向均匀分布 */
+    width: 343px;
+    height: 332px;
+}
+.radio-shadow .top .right{
+    flex: 1;
+    
+}
+.radio-shadow .top .right img{
+    width: 685px;
+    height: 332px;
+}
+
+.radio-shadow .top .left h3{
+    color: #005826;
+    font-size: 34px;
+
+}
+.radio-shadow .top .left .txt a{
+    color: #005826;
+    font-size: 15px;
+}
+
+.radio-shadow .top .left .logo{
+    width: 343px;
+    height: 207px;
+    /* margin: 50px 0 0 ; */
+    padding: 43px 21px 0;
+    background-color: #f3f3f3;
+}
+
+.radio-shadow .top .left .logo ul{
+    display: flex;
+}
+
+.radio-shadow .top .left .logo li {
+    display: flex;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    margin: 0 6px;
+}
+
+.radio-shadow .top .left .logo li:first-child{
+    background-color: #28c445;
+}
+.radio-shadow .top .left .logo li:nth-child(2){
+    background-color: #c83f39;
+}
+.radio-shadow .top .left .logo li:nth-child(3){
+    background-color: #ffb667;
+
+}
+.radio-shadow .top .left .logo span{
+width: 22px;
+height: 22px;  
+margin:  auto;
+}
+.radio-shadow .top .logo .logo-pic .iconfont{
+    font-size: 22px;    
+    color: white;
+}
+.radio-shadow .top a{
+    line-height: 0;
+}
+
+.radio-shadow .bottom{
+    height: 232px;
+
+}
+.radio-shadow .bottom ul {
+    display: flex;
+    height: 234px;
+
+}
+.radio-shadow .bottom ul li img{
+    height: 234px;    
+    width: 343px;
+
+}
+
+
+/* .email-shadow{
+    height: 263px;
+    padding: 53px;
+}
+.email-shadow .left{
+    width: 203px;
+    height: 156px;
+    background-image: url(../img/eail-logo-bgi.png);
+    
+} */
+ .email-shadow {
+    height: 263px;
+    padding: 53px;
+    display: flex; 
+    justify-content: space-between;
+}
+
+.email-shadow .left {
+    width: 203px;
+    height: 182px;
+    background-image: url(../img/eail-logo-bgi.png);
+    background-size: cover; /* 可选：确保背景图铺满容器 */
+    text-align: center;
+    margin-right: 30px;
+}
+.email-shadow .left .logo{
+    width: 203px;
+    height: 124px;
+    padding: 14px 0px;
+
+}
+.email-shadow .left .logo img{
+    padding: 15px auto;
+    margin: 20px 0 ;
+}
+.email-shadow .left .logo a{
+    font-size: 16px;
+    color: white;
+    margin-top: 20px;
+}
+
+.email-shadow .left .invite{
+    position: relative;
+    width: 203px;
+    height: 31px;
+    text-align: center; /* 文字水平居中 */
+    /* padding: 0 20px;  */
+}
+.email-shadow .left .invite span{
+    height: 18px;
+    font-size: 12px;
+    color: #fff;
+    padding: -10px 0 32px 0;
+
+}
+
+.email-shadow .left .invite::before {
+  content: "";
+  position: absolute;
+  left: 0; /* 从容器左侧开始 */
+  top: 50%; /* 垂直居中 */
+  transform: translateY(-50%); /* 精准对齐中线 */
+  width: 30%; /* 横线长度（根据需要调整） */
+  height: 1px; /* 横线粗细 */
+  background-color: #fff; /* 横线颜色（用background-color，不是color） */
+}
+
+/* 右侧横线（统一用绝对定位，避免混合flex） */
+.email-shadow .left .invite::after {
+  content: "";
+  position: absolute;
+  right: 0; /* 从容器右侧开始 */
+  top: 50%; /* 垂直居中 */
+  transform: translateY(-50%); /* 精准对齐中线 */
+  width: 30%; /* 与左侧横线对称 */
+  height: 1px; /* 横线粗细 */
+  background-color: #fff; /* 横线颜色 */
+}
+
+
+
+.email-shadow .right{
+    width: 782px;
+    height: 183px;
+    margin: 0 0 0 40px;
+    padding-left: 20px;
+    border-left: #f1f0ea solid 1px;
+}
+.email-shadow .right .a-items h4{
+width: 62px;
+height: 32px;
+    
+}
+.email-shadow .right .a-items ul{
+    display: flex;
+    flex-wrap: wrap;
+    width: 746px;
+    height: 66px;
+}
+.email-shadow .right .a-items ul li
+{
+    width: 150px;
+    height: 38px;
+}
+.email-shadow .right .a-items ul li a{
+    width: 104px;
+    height: 25px;
+    border-bottom: 1px solid #f3f3f3;
+}
+.email-shadow .right h4{
+    font-size: 15px;
+    margin: 0 0 11px;
+    font-family: "微软雅黑";
+    color: #333;
+
+}
+.email-shadow .right .notice{
+    display: flex;
+}
+.email-shadow .right .notice a{
+    padding: 0 14px;
+    color: #333;
+}
+.email-shadow .right h4::after{
+    content: "";
+  display: block; /* 让下划线单独成行 */
+  width:100%; /* 下划线宽度（根据设计调整，如与文字等宽可设为100%） */
+  height: 2px; /* 下划线粗细 */
+  background-color: #005826; /* 绿色，与设计一致 */
+  margin: 11px 0 0; /* 与标题的间距（上间距11px） */
+
+}
+
+.footer{
+    height: 165px;
+    background-image: url(../img/footer.png);
+    background-size: cover;
+}
+.footer .wp .shallow{
+    height: 122px;
+
+}
