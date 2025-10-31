@@ -116,7 +116,13 @@
     margin-bottom: 100px;
 }
 
-.showdiv{
+/* .showdiv .flow-pic{
+    display: flex;
+    justify-content: space-around;
+    padding: 35px 0;
+} */
+
+/* .showdiv{
     height: 438px;
     width: 100%;
     margin: 57px 0;
@@ -136,7 +142,6 @@
 .showdiv .flow-pic ul{
     display: flex;
     height: 250px;
-    /* margin: 0 28px; */
     animation: showdiv-run 5s steps(4) infinite;
 }
 .showdiv .flow-pic ul li{
@@ -160,11 +165,7 @@
     width: 458px;
     height: 231px;
 }
-/* .showdiv .flow-pic{
-    display: flex;
-    justify-content: space-around;
-    padding: 35px 0;
-} */
+
 .showdiv .flow-pic img{
     width: 458px;
     height: 185px;
@@ -199,8 +200,88 @@
 .showdiv .flow-pic .button .txt{
     color: white;
 }
+ */
+.showdiv{
+    height: 438px;
+    width: 100%;
+    margin: 57px 0;
+    /* padding: 0 10px; */
+}
 
+.showdiv .flow-pic{
+    /* padding: 0 10px;   */
+    position: relative;
+    display: flex;
+    height: 324px;
+    background-color: #f1f0ea;
+}
+.showdiv .flow-pic .view{
+    overflow: hidden;
+    width: 950px;
+    margin: 10px auto;
+}
 
+.showdiv .flow-pic ul{
+    display: flex;
+    height: 250px;
+    /* animation: showdiv-run 3s steps(5) infinite; */
+    transition: transform 0.8s ease-in-out;
+}
+
+.showdiv .flow-pic ul li{
+    flex-shrink: 0; 
+    width: 458px; 
+    height: 230px;
+    margin: 47px 46px 47px 0px;
+}
+
+/* @keyframes showdiv-run{
+    0%{
+        transform: translateX(0);
+    }
+    100%{
+        transform: translateX(-2520px);
+    }
+} */
+
+.showdiv .flow-pic .button {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    width: 142px;
+    height: 28px;
+    background-color: rgb(0, 88, 28);
+    right: 20px;
+    bottom: -14px;
+}
+
+.showdiv .flow-pic .button .iconfont{
+    color: white;
+    padding: auto 6px;
+}
+
+.showdiv .flow-pic .button .left,
+.showdiv .flow-pic .button .right{
+    width: 43px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.showdiv .flow-pic .button .left,
+.showdiv .flow-pic .button .right{
+    padding: 0 0 0 18px;
+}
+
+.showdiv .flow-pic .button .txt{
+    color: white;
+}
+
+/* 添加图片样式确保一致 */
+.showdiv .flow-pic img{
+    width: 458px;
+    height: 185px;
+    object-fit: cover; /* 确保图片比例正确 */
+}
 
 
 .data-bgc{
@@ -246,7 +327,7 @@
     font-size: 11px;
     font-family: "微软雅黑","黑体";
 }
- .data-view{
+ /* .data-view{
     display: flex;
     position: relative;
 }
@@ -259,7 +340,6 @@
 }
 
 .data-bgc .wp{
-    /* position: absolute; */
     position: relative;
     width: 674px;
     height: 572px;
@@ -325,7 +405,6 @@
     height: 42px;
     font-size: 18px;
     text-align: center;
-    /* align-content: center; */
     line-height: 38px;
     cursor: pointer;
 }
@@ -337,7 +416,136 @@
 .data-view .wp .button .right{
     background-color: #fff;
     color: black;
+} */
+
+
+
+/* 需要修改的样式 */
+/* 需要修改的样式 */
+.data-view{
+    display: flex;
+    position: relative;
+    overflow: hidden;
 }
+
+.data-view .title{
+    width: 774px;
+    height: 45px;
+    color: #fff;
+    font-size: 34px;
+    margin: 0 0 25px;
+}
+
+.data-bgc .wp{
+    position: relative;
+    width: 674px;
+    height: 572px;
+    left: 0;
+    bottom: 0;
+    background-color: #ffffffa8;
+}
+
+.data-bgc .data-bd{
+    position: absolute;
+    width: 1347px;
+    height: 388px;
+    padding: 21px 21px 21px 0;
+    bottom: 80px;
+    left: 50%; 
+    transform: translateX(-50%);
+    overflow: hidden;
+}
+
+.data-bd ul{
+    display: flex;
+    padding: 21px 21px 21px 0;
+    justify-content: flex-start;
+    transition: transform 0.6s ease-in-out;
+    width: max-content;
+}
+
+/* 修改：仅使用右间距控制间隙，去除左间距避免对齐偏差 */
+.data-bd ul li{
+    margin-right: 30px;
+    margin-left: 37px;
+
+    transition: all 0.6s ease-in-out;
+    flex-shrink: 0;
+}
+
+/* 修改：移除最后一个li的右边距 */
+.data-bd ul li:last-child {
+    margin-right: 0;
+}
+
+.data-bd ul li.active {
+    transform: scale(1.22);
+    transform-origin: center center;
+}
+
+.data-bd ul img{
+    width: 378px;
+    height: 235px;
+    object-fit: cover;
+}
+
+.data-bd ul li h4{
+    color: #333;
+    font-size:  14px;
+    font-family: "微软雅黑","黑体";
+    margin: 0 0 7px;
+}
+
+.data-bd ul li .mask{
+    color: #333;
+    background-color: #fff;
+    padding: 12px 14px;
+}
+
+.data-bd ul li p{
+    color: #005826;
+    font-size: 11.5px;
+}
+
+.data-view .wp .button{
+    display: flex;
+    position: absolute;
+    right: -50px;
+    bottom: 40px;
+}
+
+.data-view .wp .button .left,
+.data-view .wp .button .right
+{
+    width: 50px;
+    height: 42px;
+    font-size: 18px;
+    text-align: center;
+    line-height: 38px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.data-view .wp .button .left{
+    background-color: #ECC474;
+    color: #fff;
+}
+
+.data-view .wp .button .left:hover {
+    background-color: #d4a95f;
+}
+
+.data-view .wp .button .right{
+    background-color: #fff;
+    color: black;
+}
+
+.data-view .wp .button .right:hover {
+    background-color: #f5f5f5;
+}
+
+/* 常驻放大由JS控制active类，无需悬停态覆盖 */
+
 
 
 .study-shadow{
