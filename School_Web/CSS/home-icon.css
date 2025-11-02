@@ -1,0 +1,35 @@
+.home-bottom-icon {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    pointer-events: auto;
+}
+
+.home-bottom-icon .iconfont {
+    font-size: 45px;
+    color: rgba(255, 255, 255, 1);
+    display: block;
+    animation: iconBounce 2.5s ease-out infinite;
+}
+
+/* 悬停时暂停动画 */
+.home-bottom-icon:hover .iconfont {
+    animation-play-state: paused;
+}
+
+/* 图标动画：向下移动并逐渐消失 */
+
+@keyframes iconBounce {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+}
+
+

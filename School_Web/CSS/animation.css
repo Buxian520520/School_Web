@@ -19,3 +19,9 @@
 .nav .bottom.next li {
   color: black ; /* 黑色文字（!important 用于覆盖原有颜色） */
 }
+
+/* 确保下拉框链接在第二个页面也保持绿色 */
+.nav.solid.hide-bg.next .bottom .submenu a,
+.nav .bottom.next .submenu a {
+  color: #005826;
+}

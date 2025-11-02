@@ -367,6 +367,7 @@ li{
 {
     margin: 0;
     color: white;
+    font-weight: bold;
 }
 .nav .bottom .right  .submenu a{
     color: green;

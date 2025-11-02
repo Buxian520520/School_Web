@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./iconfont/iconfont.css">
     <link rel="stylesheet" href="./CSS/style.css">
     <link rel="stylesheet" href="./CSS/animation.css">
+    <link rel="stylesheet" href="./CSS/home-icon.css">
 
 
 </head>
@@ -192,6 +193,11 @@
           </div>
         </div>
       </div>
+      
+      <!-- 首页底部图标 -->
+      <div class="home-bottom-icon">
+        <i class="iconfont icon-xiala"></i>
+      </div>
     </section>
     
     <!-- 内容部分 -->
@@ -213,39 +219,66 @@
           <div class="items">
             <div class="left">
               <a href="">
-                <img src="./img/news1.png" alt="新闻图片">
+                <img id="news-main-image" src="./img/news1.png" alt="新闻图片">
               </a>
             </div>
             <div class="right">
               <div class="txt">
-                <p>date</p>
-                <h3>到理工大学拜访</h3>
-                <p>
-                  asfajfsaasfaosjf---------------test
-                  <hr>
-                  asfajfsaasfaosjf---------------test
-                  <hr>
-                  asfajfsaasfaosjf---------------test
-                  <hr>
-                  asfajfsaasfaosjf---------------test
-                  <hr>asfajfsaasfaosjf---------------test
+                <p id="news-main-date">2025/10/31</p>
+                <h3 id="news-main-title">中山大学承办第五届全国大学青年教师地质课程教学比赛</h3>
+                <p id="news-main-content">
+                  比赛暨中国地质学会地质教育研究分会2025年学术年会于10月25日至26日在中山大学珠海校区圆满落幕。这是地质学领域最高水平、规模最大的教学竞赛，吸引了来自68所高校的160名青年教师，超过50名专家和70多名学者参与。中山大学地球科学与工程学院钱家辉副教授和甘成石副教授均获得特等奖。本次比赛由中国地质学会及其地质教育研究分会主办。
                 </p>
+              </div>
+              <div class="news-nav">
+                <div class="news-nav-buttons">
+                  <button class="news-nav-btn news-nav-prev" id="news-prev-btn">
+                    <i class="iconfont icon-fanhui"></i>
+                  </button>
+                  <button class="news-nav-btn news-nav-next" id="news-next-btn">
+                    <i class="iconfont icon-gengduo"></i>
+                  </button>
+                </div>
+                <div class="news-nav-page" id="news-page-indicator">
+                  <span class="news-page-current">1</span>/<span class="news-page-total">3</span>
+                </div>
               </div>
             </div>
           </div>
           
           <ul class="news-ul">
-            <li>
-              <img src="" alt="新闻图片">
-              <div class="txt">1</div>
+            <li data-index="0" 
+                data-image="./img/news1.png" 
+                data-date="2025/10/31" 
+                data-title="中山大学承办第五届全国大学青年教师地质课程教学比赛"
+                data-content="比赛暨中国地质学会地质教育研究分会2025年学术年会于10月25日至26日在中山大学珠海校区圆满落幕。这是地质学领域最高水平、规模最大的教学竞赛，吸引了来自68所高校的160名青年教师，超过50名专家和70多名学者参与。中山大学地球科学与工程学院钱家辉副教授和甘成石副教授均获得特等奖。本次比赛由中国地质学会及其地质教育研究分会主办。">
+              <img src="./img/news1.png" alt="新闻图片">
+              <div class="txt">
+                <p class="news-date">2025/10/31</p>
+                <h4>中山大学承办第五届全国大学青年教师地质课程教学比赛</h4>
+              </div>
             </li>
-            <li>
-              <img src="" alt="新闻图片">
-              <div class="txt">2</div>
+            <li data-index="1" 
+                data-image="./img/news1.png" 
+                data-date="2025/10/31" 
+                data-title="中山大学传达学习党的二十届四中全会精神"
+                data-content="中山大学党委召开专题会议，传达学习党的二十届四中全会精神。会议强调，要深入学习贯彻全会精神，切实把思想和行动统一到党中央决策部署上来。会议要求，全校各级党组织和党员干部要认真学习领会全会精神实质，紧密结合学校实际，抓好贯彻落实。">
+              <img src="./img/news1.png" alt="新闻图片">
+              <div class="txt">
+                <p class="news-date">2025/10/31</p>
+                <h4>中山大学传达学习党的二十届四中全会精神</h4>
+              </div>
             </li>
-            <li>
-              <img src="" alt="新闻图片">
-              <div class="txt">3</div>
+            <li data-index="2" 
+                data-image="./img/news1.png" 
+                data-date="2025/10/31" 
+                data-title="中国联通与中山大学签署战略合作协议 共促数字化转型与产学研融合"
+                data-content="中国联通与中山大学在中山大学南校园签署战略合作协议。双方将在数字化转型、产学研融合、人才培养等领域开展深度合作。根据协议，双方将共同推进5G、云计算、大数据等新一代信息技术在教育领域的应用，构建产学研深度融合的创新生态。">
+              <img src="./img/news1.png" alt="新闻图片">
+              <div class="txt">
+                <p class="news-date">2025/10/31</p>
+                <h4>中国联通与中山大学签署战略合作协议 共促数字化转型与产学研融合</h4>
+              </div>
             </li>
           </ul>
         </div>
@@ -433,23 +466,37 @@
         <div class="bd b-wrapper">
           <div class="left">
             <a href="">
-              <img src="" alt="教学科研图片">
+              <div class="study-main-image-wrapper">
+                <img id="study-main-image" src="./img/news1.png" alt="教学科研图片">
+                <div class="study-main-title-overlay">
+                  <h3 id="study-main-title">徐瑞华教授团队创新双免疗法改变结肠癌治疗策略</h3>
+                </div>
+              </div>
             </a>
           </div>
           
           <div class="right">
-            <ul>
-              <li>
-                <img src="" alt="教学科研项目">
-                <div class="txt">1</div>
+            <ul class="study-list">
+              <li data-index="0" class="study-item" data-image="./img/news1.png" data-title="徐瑞华教授团队创新双免疗法改变结肠癌治疗策略">
+                <img src="./img/news1.png" alt="教学科研项目">
+                <div class="txt">
+                  <p class="study-date">2025/10/20</p>
+                  <h4>徐瑞华教授团队创新双免疗法改变结肠癌治疗策略</h4>
+                </div>
               </li>
-              <li>
-                <img src="" alt="教学科研项目">
-                <div class="txt">2</div>
+              <li data-index="1" class="study-item" data-image="./img/news1.png" data-title="高国全杨霞齐炜炜团队从代谢角度揭示阿尔兹海默症认知功能障碍的新调控分子">
+                <img src="./img/news1.png" alt="教学科研项目">
+                <div class="txt">
+                  <p class="study-date">2025/10/20</p>
+                  <h4>高国全杨霞齐炜炜团队从代谢角度揭示阿尔兹海默症认知功能障碍的新调控分子</h4>
+                </div>
               </li>
-              <li>
-                <img src="" alt="教学科研项目">
-                <div class="txt">3</div>
+              <li data-index="2" class="study-item" data-image="./img/news1.png" data-title="唐亚梅教授团队新研究提出卒中治疗优化方案">
+                <img src="./img/news1.png" alt="教学科研项目">
+                <div class="txt">
+                  <p class="study-date">2025/10/16</p>
+                  <h4>唐亚梅教授团队新研究提出卒中治疗优化方案</h4>
+                </div>
               </li>
             </ul>
           </div>
@@ -664,6 +711,9 @@
 <script src="./Js/homePage.js"></script>
 <!-- 在页面底部添加 -->
 <script src="./Js/data_cycle.js"></script>
+<script src="./Js/home-icon.js"></script>
+<script src="./Js/news-Cycle.js"></script>
+<script src="./Js/study-Cycle.js"></script>
 
 
 </body>
