@@ -30,9 +30,100 @@ html{
   }
 
 .page.home {
-    background-image: url("../img/autumn.png"); /* 替换为实际bgi图片路径 */
-    background-size: cover; /* 根据需要调整背景大小适配方式 */
-    background-position: center; /* 背景居中显示 */
+    position: relative;
+    overflow: hidden;
+}
+
+/* 首页轮播图样式 */
+.home-carousel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1;
+    /* 确保轮播图可以接收鼠标事件 */
+    pointer-events: auto;
+}
+
+.home-carousel-view {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.home-carousel-list {
+    display: flex;
+    height: 100%;
+    transition: transform 0.8s ease-in-out;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.home-carousel-list li {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.home-carousel-list li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    /* 确保链接可以接收鼠标事件 */
+    pointer-events: auto;
+}
+
+.home-carousel-list li img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* 首页轮播图进度条 */
+.page.home .home-carousel-progress {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    list-style: none;
+    padding: 12px 8px;
+    margin: 0;
+    z-index: 1001;
+    /* 确保可以接收鼠标事件 */
+    pointer-events: auto;
+}
+
+.home-carousel-progress-item {
+    width: 40px;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.6);
+    overflow: hidden;
+    flex-shrink: 0;
+    cursor: pointer;
+    position: relative;
+    /* 确保可以接收鼠标事件 */
+    pointer-events: auto;
+}
+
+.home-carousel-progress-item:hover{
+    cursor: pointer;
+}
+
+.home-carousel-progress-bar {
+    width: 0%;
+    height: 100%;
+    background-color: rgb(0, 128, 0);
+    transition: width linear;
+    /* 确保进度条本身不影响点击 */
+    pointer-events: none;
 }
 
 .page.next{
@@ -57,7 +148,8 @@ li{
     width: 100%;
     /* background-color: pink; */
     z-index: 100;
-
+    /* 让 header 不拦截鼠标事件，但保留导航栏的点击 */
+    pointer-events: none;
 
 }
 
@@ -86,6 +178,9 @@ li{
     width: 100%;
     /* background-image: url(../img/head-cover.png); */
     transition: all 0.3s ease;
+    /* 导航栏需要可以接收鼠标事件，并确保在轮播图之上 */
+    pointer-events: auto;
+    z-index: 8888;
 
 }
 

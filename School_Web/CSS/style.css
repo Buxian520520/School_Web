@@ -8,12 +8,6 @@
 
 }
 
-
-/* .news-shadow{
-   background-image: url(../img/news-bgi.png);
-    transform: scaleY(-1); 
-
-} */
 .news-shadow {
   position: relative;
   overflow: hidden; /* 避免伪元素超出容器 */

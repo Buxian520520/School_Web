@@ -13,11 +13,17 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const visibleCount = 3; // 一次显示3张
     const totalItems = originalItems.length;
-    const maxIndex = Math.max(originalItems.length - visibleCount, 0);
+    // 仅在末尾追加前两张的克隆（用于末尾视觉延展）
+    const appendCount = visibleCount - 1; // 2
+    for (let i = 0; i < appendCount; i++) {
+        const clone = originalItems[i].cloneNode(true);
+        list.appendChild(clone);
+    }
+    const maxIndex = Math.max(totalItems - visibleCount, 0); // 最后一个合法起始索引
 
     // 计算单个项目的总宽度（宽度 + 左右外边距）
     function calculateItemWidth() {
-        const firstItem = list.children[0] || originalItems[0];
+        const firstItem = originalItems[0] || list.children[0];
         const style = window.getComputedStyle(firstItem);
         const width = parseFloat(style.width);
         const marginRight = parseFloat(style.marginRight);
@@ -26,16 +32,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     let itemWidth = 0;
-    let currentIndex = 0;
+    let currentIndex = 0; // 初始显示最前3张
     let isAnimating = false;
     let autoPlayInterval;
+    let direction = 1; // 1 向后，-1 向前（到边界反弹）
+    const TRANSITION_MS = 800;
     
-    // 不再克隆，直接使用原始节点
-    const allItems = Array.from(list.querySelectorAll('li'));
+    // allItems 包含末尾克隆
+    let allItems = Array.from(list.querySelectorAll('li'));
     
     // 设置初始位置（显示原始的第0、1、2张）
     function setInitialPosition() {
-        // 左起第一张
+        // 初始在第一个真实元素（索引0）
         currentIndex = 0;
         itemWidth = calculateItemWidth();
         list.style.transition = 'none';
@@ -45,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 更新图片状态（active和adjacent）
     function updateItemsState() {
+        allItems = Array.from(list.querySelectorAll('li'));
         allItems.forEach((item, index) => {
             item.classList.remove('active', 'adjacent');
             
@@ -59,69 +68,69 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // 更新轮播图位置
-    function updateCarousel(withAnimation = true) {
+    // 无缝切换到指定索引
+    function goToSlide(index, withAnimation = true) {
         if (isAnimating) return;
-        
         isAnimating = true;
-        
-        const translateX = -currentIndex * itemWidth;
-        
+        currentIndex = index;
+
         if (withAnimation) {
-            list.style.transition = 'transform 0.6s ease-in-out';
+            list.style.transition = `transform ${TRANSITION_MS}ms ease-in-out`;
         } else {
             list.style.transition = 'none';
         }
-        
-        list.style.transform = `translateX(${translateX}px)`;
+
+        list.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
         updateItemsState();
-        
+
         if (withAnimation) {
             setTimeout(() => {
                 handleBoundary();
                 isAnimating = false;
-            }, 600);
+            }, TRANSITION_MS);
         } else {
             isAnimating = false;
         }
     }
     
-    // 处理循环边界
+    // 边界控制（不跳转）：仅在合法范围内切换
     function handleBoundary() {
-        // 末尾后跳回第一张；开头前跳到最后一组起始（避免空位）
         if (currentIndex > maxIndex) {
-            list.style.transition = 'none';
-            currentIndex = 0;
-            list.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
-            updateItemsState();
-        } else if (currentIndex < 0) {
-            list.style.transition = 'none';
             currentIndex = maxIndex;
-            list.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
-            updateItemsState();
+        }
+        if (currentIndex < 0) {
+            currentIndex = 0;
         }
     }
     
     // 下一张
     function nextSlide() {
         if (isAnimating) return;
-        currentIndex++;
-        updateCarousel();
+        if (currentIndex < maxIndex) {
+            goToSlide(currentIndex + 1, true);
+        }
     }
     
     // 上一张
     function prevSlide() {
         if (isAnimating) return;
-        currentIndex--;
-        updateCarousel();
+        if (currentIndex > 0) {
+            goToSlide(currentIndex - 1, true);
+        }
     }
     
     // 自动播放
     function startAutoPlay() {
         stopAutoPlay();
         autoPlayInterval = setInterval(() => {
-            if (!isAnimating) {
+            if (isAnimating) return;
+            // 在边界反弹
+            if (currentIndex === maxIndex) direction = -1;
+            if (currentIndex === 0) direction = 1;
+            if (direction === 1) {
                 nextSlide();
+            } else {
+                prevSlide();
             }
         }, 4000);
     }
