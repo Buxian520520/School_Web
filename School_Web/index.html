@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>江西理工大学官网</title>
     <link rel="stylesheet" href="./CSS/index.css">
     <link rel="stylesheet" href="./iconfont/iconfont.css">
     <link rel="stylesheet" href="./CSS/style.css">
@@ -86,27 +86,54 @@
           <div class="head-cover"></div>
           
           <!-- 顶部导航 -->
-          <div class="top total">
-            <div class="left">
-              <div></div>
-              <ul>
-                <li><a href="">门户</a></li>
-                <li><a href="">邮箱</a></li>
-                <li><a href="">usc</a></li>
-                <li><a href="">校历</a></li>
-                <li><a href="">图书馆</a></li>
-                <li><a href="">博物馆（校史馆）</a></li>
-              </ul>
+          <div class="top">
+            <div class="total">
+              <div class="left">
+                <div></div>
+                <ul>
+                  <li><a href="">门户</a></li>
+                  <li><a href="">邮箱</a></li>
+                  <li><a href="">usc</a></li>
+                  <li><a href="">校历</a></li>
+                  <li><a href="">图书馆</a></li>
+                  <li><a href="">博物馆（校史馆）</a></li>
+                </ul>
+              </div>
+              
+              <div class="right">
+                <ul>
+                  <li><a href="">招生</a></li>
+                  <li><a href="">招聘</a></li>
+                  <li><a href="">访客</a></li>
+                  <li><a href="">校友</a></li>
+                  <li><a href="">捐赠</a></li>
+                </ul>
+                <div class="nav-separator"></div>
+                <div class="nav-extra">
+                  <span class="nav-en">EN</span>
+                  <span class="nav-search-icon" id="nav-search-trigger">
+                    <i class="iconfont icon-sousuo"></i>
+                  </span>
+                </div>
+              </div>
             </div>
-            
-            <div class="right">
-              <ul>
-                <li><a href="">招生</a></li>
-                <li><a href="">招聘</a></li>
-                <li><a href="">访客</a></li>
-                <li><a href="">校友</a></li>
-                <li><a href="">捐赠</a></li>
-              </ul>
+          </div>
+          
+          <!-- 搜索模块 -->
+          <div class="nav-search-overlay" id="nav-search-overlay">
+            <div class="nav-search-container">
+              <div class="nav-search-header">
+                <h3>搜索</h3>
+                <button class="nav-search-close" id="nav-search-close">
+                  <span class="close-icon">×</span>
+                </button>
+              </div>
+              <div class="nav-search-box">
+                <input type="text" class="nav-search-input" id="nav-search-input" placeholder="请输入搜索关键词...">
+                <button class="nav-search-btn" id="nav-search-btn">
+                  <i class="iconfont icon-sousuo"></i>
+                </button>
+              </div>
             </div>
           </div>
           
@@ -133,6 +160,8 @@
                       <li><a href="">服务机构</a></li>
                       <li><a href="">理工校区</a></li>
                       <li><a href="">信息公开</a></li>
+                      <li><a href="">图书馆</a></li>
+
                     </ul>    
                   </li>
                   
@@ -518,14 +547,23 @@
             <div class="logo">
               <div class="logo-pic">
                 <ul>
-                  <li>
+                  <li data-qrcode="./img/qrcode-wechat.png">
                     <span><i class="iconfont icon-weixin"></i></span>
+                    <div class="qrcode-popup">
+                      <img src="./img/medie-qr.png" alt="微信二维码">
+                    </div>
                   </li>
-                  <li>
+                  <li data-qrcode="./img/qrcode-weibo.png">
                     <span><i class="iconfont icon-xinlangweibo"></i></span>
+                    <div class="qrcode-popup">
+                      <img src="./img/medie-qr.png" alt="微博二维码">
+                    </div>
                   </li>
-                  <li>
+                  <li data-qrcode="./img/qrcode-bilibili.png">
                     <span><i class="iconfont icon-bilibili-line"></i></span>
+                    <div class="qrcode-popup">
+                      <img src="./img/medie-qr.png" alt="Bilibili二维码">
+                    </div>
                   </li>
                 </ul>
               </div>
@@ -533,7 +571,16 @@
           </div>
           <div class="right">
             <a href="">
-              <img src="./img/news1.png" alt="社交媒体图片">
+              <div class="image-wrapper">
+                <img src="./img/news1.png" alt="社交媒体图片">
+                <div class="text-overlay">
+                  <h4>为什么我们选择加入中山大学?</h4>
+                  <div class="meta-info">
+                    <i class="iconfont icon-weixin"></i>
+                    <time>2025-10-28 17:33</time>
+                  </div>
+                </div>
+              </div>
             </a>
           </div>
         </div>
@@ -542,17 +589,44 @@
           <ul>
             <li>
               <a href="">
-                <img src="./img/news1.png" alt="社交媒体内容">
+                <div class="image-wrapper">
+                  <img src="./img/news1.png" alt="社交媒体内容">
+                  <div class="text-overlay">
+                    <h4>为什么我们选择加入中山大学?</h4>
+                    <div class="meta-info">
+                      <i class="iconfont icon-xinlangweibo"></i>
+                      <time>2025-10-28 17:33</time>
+                    </div>
+                  </div>
+                </div>
               </a>
             </li>
             <li>
               <a href="">
-                <img src="./img/news1.png" alt="社交媒体内容">
+                <div class="image-wrapper">
+                  <img src="./img/news1.png" alt="社交媒体内容">
+                  <div class="text-overlay">
+                    <h4>中山大学香港高等研究院揭牌一周年活动在港举办</h4>
+                    <div class="meta-info">
+                      <i class="iconfont icon-xinlangweibo"></i>
+                      <time>2025-10-29 09:23</time>
+                    </div>
+                  </div>
+                </div>
               </a>
             </li>
             <li>
               <a href="">
-                <img src="./img/news1.png" alt="社交媒体内容">
+                <div class="image-wrapper">
+                  <img src="./img/news1.png" alt="社交媒体内容">
+                  <div class="text-overlay">
+                    <h4>奔跑吧花粉!秋日一起趣运动! | 花粉悦动会 中山大学站</h4>
+                    <div class="meta-info">
+                      <i class="iconfont icon-bilibili-line"></i>
+                      <time>2025-10-29 09:17</time>
+                    </div>
+                  </div>
+                </div>
               </a>
             </li>
           </ul>
@@ -598,11 +672,36 @@
       <div class="footer">
         <div class="shallow">
           <div class="wp b-wrapper">
-            <div class="logo"></div>
+            <div class="footer-content">
+              <div class="footer-logo">
+                <img src="./img/S-logo1.png" alt="江西理工大学Logo">
+              </div>
+              <div class="footer-text">
+                <h3>江西理工大学</h3>
+                <p>Jiangxi University of Science and Technology</p>
+              </div>
+              <div class="footer-contact">
+                <div class="contact-info">
+                  <p>地址：江西省赣州市红旗大道86号 邮编：341000</p>
+                  <p>电话：0797-8312208</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="wp b-wrapper">
-          <div class="deep"></div>
+        <div class="deep">
+          <div class="wp b-wrapper">
+            <div class="footer-copyright">
+              <div class="copyright-icon">
+                <div class="icon-shield">
+                  <img src="./img/shield.png" alt="版权所有">
+                </div>
+              </div>
+              <div class="copyright-text">
+                <span>江西理工大学版权所有 COPYRIGHT©2025, JIANGXI UNIVERSITY OF SCIENCE AND TECHNOLOGY 联系我们-赣ICP备05001230号</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -618,6 +717,25 @@
     const nav = document.querySelector(".nav");
     const headtop = document.querySelector(".nav .top");
     const topBlockBottom = 16000; // 顶部区块底部位置
+    
+    // 获取logo元素
+    const logoImg = document.querySelector('.nav .bottom .logo img');
+    
+    // 根据当前页面更新logo图片
+    function updateLogo() {
+        if (logoImg) {
+            if (currentPage === 0) {
+                // 首页时使用 S-logo2.png
+                logoImg.src = '';
+            } else {
+                // 第二页时使用 S-logo1.png
+                logoImg.src = './img/S-logo1.png';
+            }
+        }
+    }
+    
+    // 初始加载时设置logo
+    updateLogo();
 
     // 监听鼠标滚轮事件
     container.addEventListener('wheel', (e) => {
@@ -648,6 +766,9 @@
             currentPage++;
             totalScroll += e.deltaY;
             
+            // 更新logo图片
+            updateLogo();
+            
             // 应用导航动画
             nav.classList.add('animate');
             nav.classList.add('hide-bg');
@@ -672,6 +793,9 @@
             isAnimating = true; // 锁定动画状态
             currentPage--;
             totalScroll += e.deltaY;
+            
+            // 更新logo图片
+            updateLogo();
             
             nav.classList.remove('hide-bg');
             nav.classList.remove('next');
@@ -705,6 +829,22 @@
     container.addEventListener('scrollend', () => {
         isAnimating = false; // 滚动结束后强制解锁
     });
+    
+    // 监听滚动事件，确保通过其他方式（如滚动条）切换页面时也能更新logo
+    let lastPageIndex = currentPage;
+    container.addEventListener('scroll', () => {
+        // 计算当前页面索引
+        const scrollTop = container.scrollTop;
+        const pageHeight = window.innerHeight;
+        const newPageIndex = Math.round(scrollTop / pageHeight);
+        
+        // 如果页面索引发生变化，更新logo
+        if (newPageIndex !== lastPageIndex && newPageIndex >= 0 && newPageIndex < totalPages) {
+            currentPage = newPageIndex;
+            lastPageIndex = newPageIndex;
+            updateLogo();
+        }
+    }, { passive: true });
 </script>
 
 <script src="./Js/pic_cycle.js"></script>
@@ -714,6 +854,8 @@
 <script src="./Js/home-icon.js"></script>
 <script src="./Js/news-Cycle.js"></script>
 <script src="./Js/study-Cycle.js"></script>
+<script src="./Js/medio-animation.js"></script>
+<script src="./Js/nav-search.js"></script>
 
 
 </body>

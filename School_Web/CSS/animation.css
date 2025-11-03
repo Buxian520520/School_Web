@@ -1,6 +1,6 @@
 /* 导航栏顶部部分 - 绿色背景 */
 /* 导航栏顶部绿色背景（当.nav同时有这些类时生效） */
-.nav.solid.hide-bg.next .top.total {
+.nav.solid.hide-bg.next .top {
   background-color: #005826; /* 绿色背景 */
 }
 
