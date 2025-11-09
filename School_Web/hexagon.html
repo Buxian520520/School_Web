@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>六边形轮播图</title>
+    <style>
+        /* ============================================
+           3D六边形轮播图组件 - 开始复制区域
+           ============================================ */
+        
+        /* 基础样式重置（如果页面已有，可删除） */
+        .hexagon-carousel-wrapper * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        /* 轮播容器样式 */
+        .hexagon-carousel-container {
+            position: relative;
+            margin: 100px auto;
+            perspective: 1500px; /* 3D透视效果，可根据需要调整 */
+            overflow: hidden; /* 避免旋转时产生滚动条 */
+        }
+
+        /* 轮播列表样式 */
+        .hexagon-carousel {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d; /* 保持3D效果 */
+            transition: transform 1s ease; /* 平滑过渡效果 */
+            will-change: transform; /* 优化动画，减少抖动闪烁 */
+        }
+
+        /* 每个轮播项样式 - 修改这里的宽高即可，布局会自动适配 */
+        .hexagon-carousel li {
+            position: absolute;
+            /* ========== 修改以下宽高即可，其他会自动计算 ========== */
+            width: 400px;
+            height: 225px; /* 16:9 比例示例：400 * 9 / 16 = 225 */
+            /* ===================================================== */
+            left: 50%;
+            top: 50%;
+            /* margin-left 和 margin-top 会通过JS自动计算，无需手动修改 */
+            border: 1px solid #ccc;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px; /* 圆角，可选 */
+            overflow: hidden; /* 内容溢出隐藏 */
+        }
+
+        /* 让 a 填满 li */
+        .hexagon-carousel li a{
+            display: block;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            backface-visibility: hidden; /* 正面项减少闪烁 */
+        }
+
+        .hexagon-carousel li a img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block; /* 去除行内元素默认空白间隙 */
+            backface-visibility: hidden; /* 修复某些浏览器闪频 */
+        }
+
+        /* 背面项：将内部内容翻转回正面，保证可见且不镜像 */
+        .hexagon-carousel li.is-back a {
+            transform: rotateY(180deg);
+            backface-visibility: visible; /* 背面需可见 */
+        }
+        .hexagon-carousel li.is-back a img {
+            backface-visibility: visible; /* 背面图片可见 */
+            transform:scaleX(-1);
+
+        }
+        
+        /* ============================================
+           3D六边形轮播图组件 - 结束复制区域
+           ============================================ */
+    </style>
+</head>
+<body>
+    <!-- ============================================
+         使用示例：复制以下HTML结构
+         ============================================ -->
+    <div class="hexagon-carousel-wrapper">
+        <div class="hexagon-carousel-container" id="hexagonCarouselContainer">
+            <ul class="hexagon-carousel" id="hexagonCarousel">
+                <li>
+                    <a href="">
+                        <img src="./testImg/nvwa.jpg" alt="轮播图1">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="./testImg/diaochan.jpg" alt="轮播图1">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="./testImg/waner.jpg" alt="轮播图1">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="./testImg/yuji.jpg" alt="轮播图1">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="./testImg/nvwa.jpg" alt="轮播图1">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="./testImg/waner.jpg" alt="轮播图1">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        /* ============================================
+           3D六边形轮播图组件 - JavaScript部分
+           复制以下代码，确保HTML结构中的ID匹配
+           ============================================ */
+        
+        (function() {
+            'use strict';
+            
+            // 获取轮播元素
+            const carousel = document.getElementById('hexagonCarousel');
+            const container = document.getElementById('hexagonCarouselContainer');
+            const items = carousel.querySelectorAll('li');
+            const itemCount = items.length;
+            
+            // ========== 配置参数 ==========
+            const config = {
+                angle: 360 / itemCount, // 自动计算每个项目的角度（360度 / 项目数）
+                intervalTime: 3000, // 轮播间隔时间（毫秒）
+                tiltAngle: -15, // 俯视角度（负值表示向上倾斜，形成俯视效果）
+                spacingFactor: 1.05 // 间距因子（越大间距越大，防止重叠，建议1.0-1.5）
+            };
+            
+            // ========== 获取第一个元素的尺寸 ==========
+            function getItemSize() {
+                if (items.length === 0) return { width: 400, height: 225 };
+                const firstItem = items[0];
+                const computedStyle = window.getComputedStyle(firstItem);
+                return {
+                    width: parseFloat(computedStyle.width) || firstItem.offsetWidth,
+                    height: parseFloat(computedStyle.height) || firstItem.offsetHeight
+                };
+            }
+            
+            // ========== 自动计算半径，避免重叠 ==========
+            function calculateRadius(itemWidth, itemAngle) {
+                // 将角度转换为弧度
+                const angleInRadians = (itemAngle * Math.PI) / 180;
+                // 计算相邻元素之间的弧长：半径 × 角度（弧度）
+                // 为了不重叠，弧长应该 >= 元素宽度 × 间距因子
+                const minArcLength = itemWidth * config.spacingFactor;
+                // 计算最小半径：半径 = 弧长 / 角度（弧度）
+                const minRadius = minArcLength / angleInRadians;
+                // 返回一个稍大的半径，确保有足够的安全边距（缩小倍数以减少间距）
+                return minRadius * 1.02;
+            }
+            
+            // ========== 自动设置容器大小 ==========
+            function setContainerSize(itemSize, radius) {
+                // 容器宽度 = 元素宽度 + 半径的2倍 + 边距
+                const containerWidth = itemSize.width + radius * 2 + 100;
+                // 容器高度 = 元素高度 + 半径的1.5倍 + 边距（考虑俯视角度）
+                const containerHeight = itemSize.height + radius * 1.5 + 100;
+                container.style.width = containerWidth + 'px';
+                container.style.height = containerHeight + 'px';
+                // 更新透视距离，使其与容器大小匹配
+                const perspective = Math.max(containerWidth, containerHeight) * 1.5;
+                container.style.perspective = perspective + 'px';
+            }
+            
+            // ========== 自动设置元素居中 ==========
+            function setItemCenter(item) {
+                const itemSize = getItemSize();
+                item.style.marginLeft = -itemSize.width / 2 + 'px';
+                item.style.marginTop = -itemSize.height / 2 + 'px';
+            }
+            
+            // ========== 初始化轮播图 ==========
+            let timerId = null; // 保证只有一个定时器，避免闪频
+
+            function updateFrontBackClasses(currentAngle) {
+                items.forEach((item, index) => {
+                    const rawAngle = index * config.angle - currentAngle;
+                    // 归一化到 [-180, 180)
+                    let normalized = ((rawAngle + 180) % 360 + 360) % 360 - 180;
+                    const isBack = Math.abs(normalized) > 90;
+                    if (isBack) {
+                        item.classList.add('is-back');
+                    } else {
+                        item.classList.remove('is-back');
+                    }
+                });
+            }
+
+            function initCarousel() {
+                const itemSize = getItemSize();
+                const radius = calculateRadius(itemSize.width, config.angle);
+                
+                // 设置容器大小
+                setContainerSize(itemSize, radius);
+                
+                // 初始化每个li的位置和角度
+                items.forEach((item, index) => {
+                    // 设置居中
+                    setItemCenter(item);
+                    
+                    // 计算每个项目的旋转角度
+                    const rotateY = index * config.angle;
+                    // 设置旋转和位置
+                    item.style.transform = `rotateY(${rotateY}deg) translateZ(${radius}px)`;
+                });
+                
+                // 应用初始倾斜角度
+                let currentAngle = 0;
+                carousel.style.transform = `rotateX(${config.tiltAngle}deg) rotateY(-${currentAngle}deg)`;
+                updateFrontBackClasses(currentAngle);
+                
+                // 旋转轮播图的函数
+                function rotateCarousel() {
+                    currentAngle += config.angle;
+                    carousel.style.transform = `rotateX(${config.tiltAngle}deg) rotateY(-${currentAngle}deg)`;
+                    updateFrontBackClasses(currentAngle);
+                }
+                
+                // 设置定时自动轮播
+                if (timerId) {
+                    clearInterval(timerId);
+                }
+                timerId = setInterval(rotateCarousel, config.intervalTime);
+            }
+            
+            // 页面加载完成后初始化
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initCarousel);
+            } else {
+                initCarousel();
+            }
+            
+            // 如果元素尺寸动态改变，可以调用 initCarousel() 重新初始化
+            // 也可以监听窗口大小变化，自动调整
+            window.addEventListener('resize', function() {
+                // 延迟执行，等待CSS应用
+                setTimeout(initCarousel, 100);
+            });
+            
+        })();
+        
+        /* ============================================
+           使用说明：
+           1. 只需修改 .hexagon-carousel li 的 width 和 height
+           2. 所有布局计算会自动进行，无需手动调整
+           3. 如需修改轮播间隔、俯视角度等，修改 config 对象中的参数
+           ============================================ */
+    </script>
+</body>
+</html>

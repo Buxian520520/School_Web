@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D标签云效果</title>
+    <style>
+        /* 基础样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 3D容器：设置透视效果 */
+        .tag-cloud-3d {
+            perspective: 1200px;
+            perspective-origin: center center;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 标签云容器：开启3D空间 */
+        .tagcloud {
+            transform-style: preserve-3d;
+            position: relative;
+            width: 600px;
+            height: 600px;
+            transform: translateZ(0);
+        }
+
+        /* 单个标签样式 */
+        .tag-item {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: 0 0;
+            cursor: pointer;
+            pointer-events: auto;
+            backface-visibility: hidden;
+        }
+
+        .tag-item a {
+            text-decoration: none;
+            display: block;
+            transform-style: preserve-3d;
+        }
+
+        .tag-item p {
+            white-space: nowrap;
+            padding: 6px 12px;
+            border-radius: 6px;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            color: #333;
+            font-weight: 500;
+            display: inline-block;
+            transform: translateZ(0);
+            /* 确保文字面向前方 */
+            backface-visibility: hidden;
+        }
+
+        /* 标签hover效果 */
+        .tag-item:hover p {
+            background-color: #4285f4;
+            color: white;
+            box-shadow: 0 6px 12px rgba(66, 133, 244, 0.4);
+            transform: translateZ(20px) scale(1.15);
+        }
+
+        /* 标签激活状态 */
+        .tag-item.active p {
+            background-color: #34a853;
+            color: white;
+            box-shadow: 0 8px 16px rgba(52, 168, 83, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="tag-cloud-3d">
+        <div class="tag-content eng-has-data">
+            <div class="tagcloud eng-cloud-box" id="tagCloud">
+                <!-- 标签元素 -->
+                <div data-index="0" class="tag-item" data-url="#"><a><p>军事理论</p></a></div>
+                <div data-index="1" class="tag-item" data-url="#"><a><p>军事理论课</p></a></div>
+                <div data-index="2" class="tag-item" data-url="#"><a><p>高校实验室安全基础</p></a></div>
+                <div data-index="3" class="tag-item" data-url="#"><a><p>产品设计</p></a></div>
+                <div data-index="4" class="tag-item" data-url="#"><a><p>高等数学</p></a></div>
+                <div data-index="5" class="tag-item" data-url="#"><a><p>高校实验室安全</p></a></div>
+                <div data-index="6" class="tag-item" data-url="#"><a><p>江西理工大学</p></a></div>
+                <div data-index="7" class="tag-item" data-url="#"><a><p>军事</p></a></div>
+                <div data-index="8" class="tag-item" data-url="#"><a><p>稀土</p></a></div>
+                <div data-index="9" class="tag-item" data-url="#"><a><p>唐景洪</p></a></div>
+                <div data-index="10" class="tag-item" data-url="#"><a><p>知网</p></a></div>
+                <div data-index="11" class="tag-item" data-url="#"><a><p>人工智能</p></a></div>
+                <div data-index="12" class="tag-item" data-url="#"><a><p>无机化学</p></a></div>
+                <div data-index="13" class="tag-item" data-url="#"><a><p>实验室</p></a></div>
+                <div data-index="14" class="tag-item" data-url="#"><a><p>红色文化</p></a></div>
+                <div data-index="15" class="tag-item" data-url="#"><a><p>实验</p></a></div>
+                <div data-index="16" class="tag-item" data-url="#"><a><p>实验室安全</p></a></div>
+                <div data-index="17" class="tag-item" data-url="#"><a><p>高校实验室</p></a></div>
+                <div data-index="18" class="tag-item" data-url="#"><a><p>蛊真人</p></a></div>
+                <div data-index="19" class="tag-item" data-url="#"><a><p>尔雅</p></a></div>
+                <div data-index="20" class="tag-item" data-url="#"><a><p>车间布局优化</p></a></div>
+                <div data-index="21" class="tag-item" data-url="#"><a><p>签到</p></a></div>
+                <div data-index="22" class="tag-item" data-url="#"><a><p>黄开启</p></a></div>
+                <div data-index="23" class="tag-item" data-url="#"><a><p>C语言</p></a></div>
+                <div data-index="24" class="tag-item" data-url="#"><a><p>化学与化工实验室安全</p></a></div>
+                <div data-index="25" class="tag-item" data-url="#"><a><p>研讨间</p></a></div>
+                <div data-index="26" class="tag-item" data-url="#"><a><p>数值分析</p></a></div>
+                <div data-index="27" class="tag-item" data-url="#"><a><p>挤压az80</p></a></div>
+                <div data-index="28" class="tag-item" data-url="#"><a><p>表面活性剂</p></a></div>
+                <div data-index="29" class="tag-item" data-url="#"><a><p>高校 技术转移 成果转化</p></a></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 获取标签云和标签元素
+        const tagCloud = document.getElementById('tagCloud');
+        const tags = document.querySelectorAll('.tag-item');
+        const tagCount = tags.length;
+        const radius = 250; // 3D球面半径
+        
+        // 存储每个标签的3D位置信息
+        const tagPositions = [];
+        
+        // 旋转控制
+        let rotateX = 0;
+        let rotateY = 0;
+        let autoRotateSpeed = 0.5; // 自动旋转速度
+        let isMouseDown = false;
+        let lastMouseX = 0;
+        let lastMouseY = 0;
+        let mouseRotateX = 0;
+        let mouseRotateY = 0;
+        
+        // 初始化3D标签位置
+        function initTagPositions() {
+            tags.forEach((tag, index) => {
+                // 使用斐波那契螺旋算法均匀分布标签
+                const goldenAngle = Math.PI * (3 - Math.sqrt(5)); // 黄金角度
+                const theta = goldenAngle * index;
+                const y = 1 - (index / (tagCount - 1)) * 2; // y从1到-1
+                const radius_at_y = Math.sqrt(1 - y * y);
+                const x = Math.cos(theta) * radius_at_y;
+                const z = Math.sin(theta) * radius_at_y;
+                
+                // 转换为实际3D坐标
+                const posX = x * radius;
+                const posY = y * radius;
+                const posZ = z * radius;
+                
+                // 存储位置信息
+                tagPositions.push({ x: posX, y: posY, z: posZ });
+                
+                // 根据z轴位置设置初始大小（远处的标签小一些）
+                const baseSize = 14;
+                const size = baseSize + (posZ / radius) * 6;
+                tag.querySelector('p').style.fontSize = `${size}px`;
+                
+                // 存储初始字体大小
+                tag.dataset.baseSize = size;
+            });
+        }
+        
+        // 更新标签位置和朝向
+        function updateTags() {
+            // 计算当前旋转角度（自动旋转 + 鼠标旋转）
+            const currentRotateX = rotateX + mouseRotateX;
+            const currentRotateY = rotateY + mouseRotateY;
+            
+            // 应用容器旋转
+            tagCloud.style.transform = `rotateX(${currentRotateX}deg) rotateY(${currentRotateY}deg)`;
+            
+            // 更新每个标签
+            tags.forEach((tag, index) => {
+                const pos = tagPositions[index];
+                
+                // 旋转每个标签的位置（围绕Y轴和X轴）
+                const radX = (currentRotateX * Math.PI) / 180;
+                const radY = (currentRotateY * Math.PI) / 180;
+                
+                // 应用Y轴旋转
+                let x1 = pos.x;
+                let y1 = pos.y;
+                let z1 = pos.z;
+                let x2 = x1 * Math.cos(radY) - z1 * Math.sin(radY);
+                let z2 = x1 * Math.sin(radY) + z1 * Math.cos(radY);
+                
+                // 应用X轴旋转
+                let y2 = y1 * Math.cos(radX) + z2 * Math.sin(radX);
+                let z3 = -y1 * Math.sin(radX) + z2 * Math.cos(radX);
+                
+                // 计算标签的3D位置
+                const translateX = x2;
+                const translateY = y2;
+                const translateZ = z3;
+                
+                // 计算标签的旋转角度，使其始终面向用户（billboarding）
+                // 根据标签在3D空间中的位置计算需要的旋转
+                const angleY = -Math.atan2(translateX, translateZ) * (180 / Math.PI);
+                const angleX = Math.atan2(translateY, Math.sqrt(translateX * translateX + translateZ * translateZ)) * (180 / Math.PI);
+                
+                // 应用变换：先移动到3D位置，再旋转使其面向用户
+                tag.style.transform = `translate(-50%, -50%) translate3d(${translateX}px, ${translateY}px, ${translateZ}px) rotateY(${angleY}deg) rotateX(${angleX}deg)`;
+                
+                // 根据z轴深度调整大小和透明度
+                const depth = (translateZ + radius) / (2 * radius); // 0到1之间
+                const scale = 0.6 + depth * 0.4; // 0.6到1之间
+                const opacity = 0.5 + depth * 0.5; // 0.5到1之间
+                
+                const p = tag.querySelector('p');
+                const baseSize = parseFloat(tag.dataset.baseSize);
+                p.style.fontSize = `${baseSize * scale}px`;
+                p.style.opacity = opacity;
+                
+                // 设置z-index，确保近处的标签在上层
+                tag.style.zIndex = Math.floor(translateZ + radius * 2);
+            });
+        }
+        
+        // 自动旋转
+        function autoRotate() {
+            rotateY += autoRotateSpeed;
+            updateTags();
+        }
+        
+        // 鼠标交互
+        const container = document.querySelector('.tag-cloud-3d');
+        
+        container.addEventListener('mousedown', (e) => {
+            isMouseDown = true;
+            lastMouseX = e.clientX;
+            lastMouseY = e.clientY;
+            container.style.cursor = 'grabbing';
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (isMouseDown) {
+                const deltaX = e.clientX - lastMouseX;
+                const deltaY = e.clientY - lastMouseY;
+                
+                mouseRotateY += deltaX * 0.5;
+                mouseRotateX -= deltaY * 0.5;
+                
+                // 限制X轴旋转角度
+                mouseRotateX = Math.max(-90, Math.min(90, mouseRotateX));
+                
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+                
+                updateTags();
+            }
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isMouseDown = false;
+            container.style.cursor = 'grab';
+        });
+        
+        // 鼠标离开窗口时也取消拖拽
+        document.addEventListener('mouseleave', () => {
+            isMouseDown = false;
+            container.style.cursor = 'grab';
+        });
+        
+        // 标签点击事件
+        tags.forEach(tag => {
+            tag.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // 添加激活状态
+                tags.forEach(t => t.classList.remove('active'));
+                tag.classList.add('active');
+                
+                // 获取链接URL
+                const url = tag.dataset.url || '#';
+                
+                // 执行跳转（可以修改为实际跳转逻辑）
+                if (url && url !== '#') {
+                    setTimeout(() => {
+                        window.location.href = url;
+                    }, 300);
+                } else {
+                    // 如果没有URL，可以显示提示或执行其他操作
+                    console.log('点击标签:', tag.querySelector('p').textContent);
+                }
+            });
+        });
+        
+        // 动画循环
+        function animate() {
+            if (!isMouseDown) {
+                autoRotate();
+            }
+            requestAnimationFrame(animate);
+        }
+        
+        // 初始化
+        initTagPositions();
+        updateTags();
+        animate();
+        
+        // 设置容器鼠标样式
+        container.style.cursor = 'grab';
+    </script>
+</body>
+</html>

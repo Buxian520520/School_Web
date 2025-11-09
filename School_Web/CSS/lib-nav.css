@@ -1,0 +1,129 @@
+/* 顶部导航 - 学院分馆 悬停下拉（尽量纯 CSS） */
+
+/* 让导航容器能作为定位上下文 */
+.navbar-container { position: relative; }
+.navbar .nav { position: relative; }
+.navbar .nav a,
+.navbar .nav .nav-link { position: relative; z-index: 2; }
+
+/* 含 mega 的条目作为定位容器 */
+.navbar .nav .nav-item.has-mega { position: relative; }
+.navbar .nav .nav-item.has-mega > .nav-link {
+  display: inline-block;
+  padding: 0 2px;
+}
+.navbar .nav .nav-item.has-mega > .nav-link::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: -18px; height: 18px;
+  /* 扩大 hover 热区，避免移入面板时断开 */
+}
+
+/* 面板主体 - 学院分馆 */
+.mega-panel {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  top: 52px;
+  width: 1280px;
+  max-width: calc(100% - 48px);
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+  border-radius: 0;
+  border: none;
+  padding: 24px 32px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+  color: #123;
+  z-index: 150;
+}
+
+/* grid 布局 - 固定5列 */
+.mega-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  row-gap: 0;
+}
+
+/* 每个学院项样式：绿色文字 */
+.mega-grid a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+  color: #1e5c3a;
+  text-align: left;
+  padding: 14px 20px;
+  border-bottom: 1px solid #e8e8e8;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  min-height: 48px;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow: visible;
+  line-height: 1.5;
+}
+
+/* 最后一行不需要底部边框 */
+.mega-grid a:nth-last-child(-n+5) {
+  border-bottom: none;
+}
+
+.mega-grid a:hover {
+  color: #0f3c25;
+  background-color: #f5f5f5;
+}
+
+/* 触发：hover 与 :focus-within 皆可展开 - 学院分馆 */
+.navbar .nav .nav-item.has-mega:not(.subject-nav):hover > .mega-panel,
+.navbar .nav .nav-item.has-mega:not(.subject-nav):focus-within > .mega-panel {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 学院分馆导航链接初始样式 - 明显可见 */
+.navbar .nav .nav-item.has-mega:not(.subject-nav) > .nav-link {
+  color: #fff;
+  opacity: 1;
+  position: relative;
+}
+
+/* 当面板展开时高亮导航项 - 学院分馆 */
+.navbar .nav .nav-item.has-mega:not(.subject-nav):hover > .nav-link,
+.navbar .nav .nav-item.has-mega:not(.subject-nav):focus-within > .nav-link {
+  color: #fff;
+  text-shadow: 0 0 0.5px rgba(255,255,255,.8);
+  opacity: 1;
+  position: relative;
+}
+
+/* 学院分馆悬停时的橙色三角形指示器 */
+.navbar .nav .nav-item.has-mega:not(.subject-nav):hover > .nav-link::before {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #ff8a00;
+  z-index: 151;
+}
+
+/* 学院分馆导航项的热区扩展 */
+.navbar .nav .nav-item.has-mega:not(.subject-nav) > .nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -18px;
+  height: 18px;
+}
+
+/* 防止面板与后景元素交互冲突 */
+.hero { isolation: isolate; }
+
+

@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图书馆首页框架</title>
+    <link rel="stylesheet" href="CSS/lib-nav.css">
+    <link rel="stylesheet" href="CSS/hexagon.css">
+    <link rel="stylesheet" href="iconfont/iconfont.css">
+    <style>
+        /* 主题色与变量 */
+        :root {
+            --brand-green: #1f5d3b;
+            --brand-green-dark: #16472d;
+            --brand-accent: #ff8a00;
+            --glass-bg: rgba(255, 255, 255, 0.12);
+            --glass-stroke: rgba(255, 255, 255, 0.25);
+            --text-on-dark: #f4f6f8;
+            --muted: #cfd8dc;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+            color: var(--text-on-dark);
+            background: #0f2b1b;
+        }
+
+        /* 顶部栏 */
+        .topbar {
+            background: linear-gradient(180deg, var(--brand-green) 0%, var(--brand-green-dark) 100%);
+            color: var(--text-on-dark);
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 101;
+        }
+        .topbar .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            font-size: 18px;
+        }
+        .topbar .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff;
+        }
+        .topbar .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .topbar .logo-text .cn {
+            font-size: 18px;
+            line-height: 1.2;
+        }
+        .topbar .logo-text .en {
+            font-size: 12px;
+            opacity: 0.9;
+            line-height: 1.2;
+        }
+        .topbar .meta {
+            opacity: .85;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .topbar .meta .weather {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .topbar .meta .login {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        /* 导航栏 - 独立于顶部栏 */
+        .navbar {
+            background: rgba(31, 93, 59, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--text-on-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            height: 50px;
+            border-bottom: 3px solid var(--brand-accent);
+            position: fixed;
+            top: 72px;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .navbar-container {
+            width: 1280px;
+            max-width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            position: relative;
+            padding: 0 24px;
+        }
+        .navbar .nav {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+            justify-content: center;
+        }
+        .navbar .nav a,
+        .navbar .nav .nav-link {
+            color: var(--text-on-dark);
+            text-decoration: none;
+            font-size: 15px;
+            white-space: nowrap;
+            opacity: .9;
+            transition: opacity 0.2s;
+        }
+        .navbar .nav .mega-grid a{
+            color: #0f2b1b;
+        }
+        .navbar .nav a:hover,
+        .navbar .nav .nav-link:hover {
+            opacity: 1;
+        }
+
+        /* 英雄区背景 */
+        .hero {
+            min-height: calc(100vh - 122px);
+            margin-top: 122px;
+            position: relative;
+            background: #ffffff;
+            overflow: hidden;
+        }
+
+        /* 版心容器 */
+        .hero-container {
+            width: 1280px;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+            padding: 0 24px;
+        }
+
+        /* 搜索和widget容器 */
+        .hero-content {
+            position: absolute;
+            left: 50%;
+            top: 38%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            max-width: 1280px;
+            padding: 0 24px;
+            display: flex;
+            gap: 24px;
+            align-items: stretch;
+            box-sizing: border-box;
+            z-index: 2;
+        }
+
+        /* 中心搜索卡片 */
+        .search-wrap {
+            flex: 1;
+            height: 200px;
+            align-self: center;
+            min-width: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .search-tabs {
+            display: flex;
+            gap: 12px;
+            padding: 20px 24px 16px;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .search-tabs .tab {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 999px;
+            background: rgba(245, 245, 245, 0.9);
+            border: 1px solid rgba(224, 224, 224, 0.8);
+            cursor: pointer;
+            user-select: none;
+            font-size: 15px;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            text-align: center;
+            min-width: 0;
+            color: #333;
+        }
+        .search-tabs .tab:hover {
+            background: rgba(238, 238, 238, 0.95);
+            border-color: rgba(200, 200, 200, 0.9);
+        }
+        .search-tabs .tab.active {
+            background: rgba(48, 100, 58, 0.15);
+            border-color: rgba(48, 100, 58, 0.4);
+            color: #30643A;
+            font-weight: 600;
+        }
+        .search-bar {
+            display: flex;
+            gap: 14px;
+            padding: 0 24px 20px;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .seg {
+            min-width: 100px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(224, 224, 224, 0.8);
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 15px;
+            color: #333;
+        }
+        .search-input {
+            flex: 1;
+            height: 52px;
+            border-radius: 12px;
+            border: 1px solid rgba(224, 224, 224, 0.8);
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            outline: none;
+            padding: 0 18px;
+            font-size: 15px;
+        }
+        .search-input::placeholder {
+            color: #999;
+        }
+        .search-btn {
+            height: 52px;
+            padding: 0 28px;
+            border-radius: 12px;
+            background: var(--brand-accent);
+            color: #222;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* 右侧统计小部件 */
+        .right-widgets {
+            flex-shrink: 0;
+            width: 360px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .widget {
+            background: rgba(20, 84, 55, .6);
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.35);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .widget h4 { margin: 0 0 8px; font-weight: 700; }
+        .widget .muted { color: var(--muted); font-size: 13px; }
+
+        /* 左侧浮动栏 */
+        .left-rail {
+            position: fixed;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: grid;
+            gap: 10px;
+            z-index: 52;
+            transition: transform 0.3s ease;
+        }
+        .left-rail.hidden {
+            transform: translateY(-50%) translateX(calc(-100% - 55px));
+        }
+        .rail-btn-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        .left-rail-toggle {
+            position: absolute;
+            right: -54px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #1f5d3b;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: grid;
+            place-items: center;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            z-index: 51;
+        }
+        .left-rail-toggle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .left-rail-toggle:hover {
+            background: #ff9700;
+        }
+        .left-rail-toggle:hover::before {
+            opacity: 1;
+        }
+        .left-rail-toggle .iconfont {
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+        .rail-btn {
+            width: 60px; height: 60px;
+            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            display: grid; place-items: center;
+            color: #30643A;
+            text-decoration: none;
+            font-size: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.1);
+        }
+
+        /* 右侧快速菜单 */
+        .right-rail {
+            position: fixed;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: grid;
+            gap: 14px;
+            z-index: 52;
+        }
+        .quick-btn {
+            width: 64px; height: 64px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            display: grid; place-items: center;
+            color: #30643A;
+            text-decoration: none;
+            font-size: 12px;
+            position: relative;
+            transition: background 0.3s ease, color 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,.1);
+        }
+        .quick-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .quick-btn:hover {
+            background: #ff9700;
+            color: #ffffff;
+        }
+        .quick-btn:hover::before {
+            opacity: 1;
+        }
+
+        /* 底部功能快捷 */
+        .bottom-features {
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 1280px;
+            max-width: calc(100% - 48px);
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 14px;
+            padding: 20px 14px 30px;
+            background: transparent;
+            border-radius: 0;
+            border: none;
+            z-index: 2;
+        }
+        .feature {
+            height: 90px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            display: grid; 
+            place-items: center;
+            text-align: center;
+            font-size: 14px;
+            color: #ffffff;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        .feature:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 学科导航 Mega Panel 样式 */
+        .subject-mega-panel {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            top: 52px;
+            width: 1280px;
+            max-width: calc(100% - 48px);
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,.15);
+            border-radius: 0;
+            border: none;
+            padding: 32px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+            z-index: 200;
+        }
+
+        .navbar .nav .nav-item.subject-nav:hover > .subject-mega-panel,
+        .navbar .nav .nav-item.subject-nav:focus-within > .subject-mega-panel {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* 学科网格布局 - 5列 */
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        /* 学科卡片样式 */
+        .subject-card {
+            position: relative;
+            aspect-ratio: 1.6;
+            border-radius: 12px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,.15);
+        }
+
+        /* 各学科卡片背景渐变 */
+        .subject-arts { background: linear-gradient(135deg, #FF6B9D 0%, #C44569 100%); }
+        .subject-management { background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%); }
+        .subject-military { background: linear-gradient(135deg, #95E1D3 0%, #6BCB9F 100%); }
+        .subject-medicine { background: linear-gradient(135deg, #F38181 0%, #AA4A44 100%); }
+        .subject-agriculture { background: linear-gradient(135deg, #AAE3E2 0%, #6EC5B8 100%); }
+        .subject-engineering { background: linear-gradient(135deg, #FCE38A 0%, #F38181 100%); }
+        .subject-science { background: linear-gradient(135deg, #EAFFD0 0%, #B4F8C8 100%); }
+        .subject-history { background: linear-gradient(135deg, #B4A7D6 0%, #8B7AA8 100%); }
+        .subject-literature { background: linear-gradient(135deg, #C7CEEA 0%, #9BA3EB 100%); }
+        .subject-education { background: linear-gradient(135deg, #FFD3A5 0%, #FFA07A 100%); }
+        .subject-law { background: linear-gradient(135deg, #FD9853 0%, #E67E22 100%); }
+        .subject-economics { background: linear-gradient(135deg, #A8E6CF 0%, #7ED321 100%); }
+        .subject-philosophy { background: linear-gradient(135deg, #FFD93D 0%, #F9CA24 100%); }
+        .subject-comprehensive { background: linear-gradient(135deg, #6BCB77 0%, #4CAF50 100%); }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.4));
+            z-index: 1;
+        }
+
+        .subject-card span {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+            font-size: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(0,0,0,.5);
+            text-align: center;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 8px 24px rgba(0,0,0,.25);
+        }
+
+        /* 学科导航项hover效果 */
+        .navbar .nav .nav-item.subject-nav:hover > .nav-link,
+        .navbar .nav .nav-item.subject-nav:focus-within > .nav-link {
+            opacity: 1;
+            position: relative;
+        }
+
+        .navbar .nav .nav-item.subject-nav:hover > .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid #ff8a00;
+            /* z-index: 280; */
+        }
+
+        .navbar .nav .nav-item.subject-nav > .nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -18px;
+            height: 18px;
+        }
+
+
+        @media (max-width: 1400px) {
+            .mega-panel,
+            .subject-mega-panel {
+                width: calc(100% - 48px);
+                max-width: 1280px;
+            }
+            .mega-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .subject-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 1320px) {
+            .hero-content {
+                max-width: calc(100% - 48px);
+                padding: 0 16px;
+            }
+            .right-widgets {
+                width: 320px;
+            }
+        }
+
+        @media (max-width: 1100px) {
+            .mega-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .subject-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .hero-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .right-widgets {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .topbar { flex-direction: column; height: auto; padding: 12px; }
+            .topbar .logo { margin-bottom: 8px; }
+            .topbar .meta { flex-wrap: wrap; justify-content: center; }
+            .navbar { position: relative; top: 0; }
+            .navbar-container { width: 100%; padding: 0 16px; }
+            .navbar .nav { flex-wrap: wrap; gap: 16px; }
+            .mega-panel,
+            .subject-mega-panel {
+                position: absolute;
+                width: 100%;
+                left: 0;
+                transform: translateY(10px);
+                top: 100%;
+            }
+            .mega-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .subject-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hero-content {
+                position: static;
+                transform: none;
+                margin: 18vh auto 0;
+                padding: 0 16px;
+            }
+            .right-widgets { width: 100%; }
+            .left-rail, .right-rail { display: none; }
+            .hero { min-height: calc(100vh - 200px); margin-top: 0; padding-bottom: 160px; }
+            .bottom-features { 
+                grid-template-columns: repeat(3, 1fr); 
+                bottom: 20px;
+                width: calc(100% - 32px);
+                max-width: 100%;
+            }
+        }
+
+        /* Footer 样式 */
+        .footer {
+            background: var(--brand-green-dark);
+            color: var(--text-on-dark);
+            position: relative;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+        .footer-container {
+            width: 1280px;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .footer-top {
+            margin-bottom: 30px;
+        }
+        .footer-logo-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .footer-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #fff;
+            padding: 8px;
+        }
+        .footer-logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .footer-logo-cn {
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        .footer-logo-en {
+            font-size: 12px;
+            opacity: 0.9;
+            line-height: 1.3;
+            margin-top: 4px;
+        }
+        .footer-middle {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 40px;
+            margin-bottom: 30px;
+            align-items: start;
+        }
+        .footer-section-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 0 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,.2);
+            position: relative;
+        }
+        .footer-section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            width: 60px;
+            height: 1px;
+            background: var(--brand-accent);
+        }
+        .footer-contact {
+            min-width: 300px;
+        }
+        .footer-contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .footer-icon {
+            color: var(--brand-accent);
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .footer-qrcodes {
+            display: flex;
+            gap: 20px;
+        }
+        .qrcode-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .qrcode-placeholder {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,.1);
+            border: 1px solid rgba(255,255,255,.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: rgba(255,255,255,.6);
+        }
+        .qrcode-item span {
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        .footer-quick-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .footer-quick-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+            color: var(--text-on-dark);
+            font-size: 12px;
+            transition: transform 0.2s ease;
+        }
+        .footer-quick-btn:hover {
+            transform: scale(1.05);
+        }
+        .footer-quick-btn-orange {
+            background: var(--brand-accent);
+            color: #fff;
+        }
+        .footer-quick-btn-white {
+            background: #fff;
+            color: var(--brand-green);
+        }
+        .footer-btn-icon {
+            font-size: 24px;
+        }
+        .footer-links {
+            margin-bottom: 20px;
+        }
+        .footer-links-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        .footer-link-btn {
+            padding: 10px 16px;
+            background: rgba(255,255,255,.05);
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--text-on-dark);
+            font-size: 13px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+        .footer-link-btn:hover {
+            background: rgba(255,255,255,.1);
+            border-color: rgba(255,255,255,.25);
+        }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,.1);
+            font-size: 13px;
+        }
+        .footer-copyright {
+            opacity: 0.9;
+        }
+        .footer-stats {
+            opacity: 0.9;
+        }
+        .footer-back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            padding: 8px;
+            background: var(--brand-green);
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 8px;
+            color: var(--text-on-dark);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        .footer-back-to-top:hover {
+            background: var(--brand-green-dark);
+            transform: translateY(-2px);
+        }
+        .footer-back-to-top span:first-child {
+            font-size: 18px;
+        }
+
+        @media (max-width: 1320px) {
+            .footer-container {
+                padding: 0 16px;
+            }
+            .footer-middle {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .footer-qrcodes {
+                justify-content: flex-start;
+            }
+            .footer-quick-btns {
+                flex-direction: row;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .footer-links-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+        }
+
+        /* 图片轮播图样式 - 作为hero背景 */
+        .lib-carousel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .lib-carousel-view {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .lib-carousel-list {
+            display: flex;
+            height: 100%;
+            transition: transform 0.8s ease-in-out;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .lib-carousel-list li {
+            flex-shrink: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .lib-carousel-list li a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            pointer-events: none;
+        }
+
+        .lib-carousel-list li img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部栏 -->
+    <header class="topbar">
+        <div class="logo">
+            <img alt="logo" src="img/S-logo.png">
+            <div class="logo-text">
+                <div class="cn">江西理工大学图书馆</div>
+                <div class="en">JIANGXI UNIVERSITY OF SCIENCE AND TECHNOLOGY LIBRARY</div>
+            </div>
+        </div>
+        <div class="meta">
+            <span id="nowText">--</span>
+            <span>南康区</span>
+            <div class="weather">
+                <span>☁️</span>
+                <span>多云 19~25 °C</span>
+            </div>
+            <div class="login">
+                <span>👤</span>
+                <span>登录</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 导航栏 -->
+    <nav class="navbar" aria-label="主导航">
+        <div class="navbar-container">
+            <div class="nav">
+                <a href="#">首页</a>
+                <a href="#">新闻动态</a>
+                <a href="#">数字资源</a>
+                <div class="nav-item has-mega" aria-haspopup="true" aria-expanded="false">
+                    <a href="javascript:void(0)" class="nav-link">学院分馆</a>
+                    <!-- Mega Panel -->
+                    <div class="mega-panel" role="menu" aria-label="学院分馆">
+                        <div class="mega-grid">
+                            <a href="#" role="menuitem">材冶化学部</a>
+                            <a href="#" role="menuitem">材料科学与工程学院</a>
+                            <a href="#" role="menuitem">冶金工程学院</a>
+                            <a href="#" role="menuitem">化学化工学院</a>
+                            <a href="#" role="menuitem">矿业工程学院</a>
+                            <a href="#" role="menuitem">土木与测绘工程学院</a>
+                            <a href="#" role="menuitem">建筑与设计学院</a>
+                            <a href="#" role="menuitem">机电工程学院</a>
+                            <a href="#" role="menuitem">电气工程与自动化学院</a>
+                            <a href="#" role="menuitem">信息工程学院</a>
+                            <a href="#" role="menuitem">经济管理学院</a>
+                            <a href="#" role="menuitem">法学院</a>
+                            <a href="#" role="menuitem">马克思主义学院</a>
+                            <a href="#" role="menuitem">外国语学院</a>
+                            <a href="#" role="menuitem">理学院</a>
+                            <a href="#" role="menuitem">能源与机械工程学院</a>
+                            <a href="#" role="menuitem">软件工程学院</a>
+                            <a href="#" role="menuitem">商学院</a>
+                            <a href="#" role="menuitem">安全工程学院</a>
+                            <a href="#" role="menuitem">体育与艺术学院</a>
+                            <a href="#" role="menuitem">先进铜产业学院</a>
+                            <a href="#" role="menuitem">稀土学院</a>
+                        </div>
+                    </div>
+                </div>
+            <div class="nav-item has-mega subject-nav" aria-haspopup="true" aria-expanded="false">
+                <a href="javascript:void(0)" class="nav-link">学科导航</a>
+                <!-- 学科导航 Mega Panel -->
+                <div class="subject-mega-panel" role="menu" aria-label="学科导航">
+                    <div class="subject-grid">
+                        <a href="#" class="subject-card subject-arts" role="menuitem">
+                            <span>艺术学</span>
+                        </a>
+                        <a href="#" class="subject-card subject-management" role="menuitem">
+                            <span>管理学</span>
+                        </a>
+                        <a href="#" class="subject-card subject-military" role="menuitem">
+                            <span>军事学</span>
+                        </a>
+                        <a href="#" class="subject-card subject-medicine" role="menuitem">
+                            <span>医学</span>
+                        </a>
+                        <a href="#" class="subject-card subject-agriculture" role="menuitem">
+                            <span>农学</span>
+                        </a>
+                        <a href="#" class="subject-card subject-engineering" role="menuitem">
+                            <span>工学</span>
+                        </a>
+                        <a href="#" class="subject-card subject-science" role="menuitem">
+                            <span>理学</span>
+                        </a>
+                        <a href="#" class="subject-card subject-history" role="menuitem">
+                            <span>历史学</span>
+                        </a>
+                        <a href="#" class="subject-card subject-literature" role="menuitem">
+                            <span>文学</span>
+                        </a>
+                        <a href="#" class="subject-card subject-education" role="menuitem">
+                            <span>教育学</span>
+                        </a>
+                        <a href="#" class="subject-card subject-law" role="menuitem">
+                            <span>法学</span>
+                        </a>
+                        <a href="#" class="subject-card subject-economics" role="menuitem">
+                            <span>经济学</span>
+                        </a>
+                        <a href="#" class="subject-card subject-philosophy" role="menuitem">
+                            <span>哲学</span>
+                        </a>
+                        <a href="#" class="subject-card subject-comprehensive" role="menuitem">
+                            <span>综合</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <a href="#">图书捐赠</a>
+            <a href="#">服务指南</a>
+            <a href="#">关于我们</a>
+        </div>
+    </nav>
+
+    <main class="hero">
+        <!-- 轮播图背景 -->
+        <div class="lib-carousel">
+            <div class="lib-carousel-view">
+                <ul class="lib-carousel-list">
+                    <!-- 复制最后一张图片放在开头 -->
+                    <li>
+                        <a href="">
+                            <img src="./img/lib-pic4.png" alt="轮播图4">
+                        </a>
+                    </li>
+                    <!-- 原始图片 -->
+                    <li>
+                        <a href="">
+                            <img src="./img/lib-pic1.png" alt="轮播图1">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="./img/lib-pic2.png" alt="轮播图2">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="./img/lib-pic3.png" alt="轮播图3">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="./img/lib-pic4.png" alt="轮播图4">
+                        </a>
+                    </li>
+                    <!-- 复制第一张图片放在结尾 -->
+                    <li>
+                        <a href="">
+                            <img src="./img/lib-pic1.png" alt="轮播图1">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 左侧浮动栏 -->
+        <div class="left-rail" id="leftRail">
+            <a class="rail-btn" href="#">常见问题</a>
+            <a class="rail-btn" href="#">数据</a>
+            <div class="rail-btn-wrapper">
+                <a class="rail-btn" href="#">我的空间</a>
+                <div class="left-rail-toggle" id="leftRailToggle">
+                    <i class="iconfont icon-fanhui"></i>
+                </div>
+            </div>
+            <a class="rail-btn" href="#">馆长信箱</a>
+            <a class="rail-btn" href="#">在线咨询</a>
+        </div>
+
+        <!-- 右侧快速菜单 -->
+        <div class="right-rail">
+            <a class="quick-btn" href="#">检索</a>
+            <a class="quick-btn" href="#">新闻</a>
+            <a class="quick-btn" href="#">应用</a>
+            <a class="quick-btn" href="#">荐读</a>
+            <a class="quick-btn" href="#">学术</a>
+            <a class="quick-btn" href="#">工具</a>
+        </div>
+
+        <!-- 搜索和widget容器 -->
+        <div class="hero-content">
+            <!-- 中心搜索区域 -->
+            <section class="search-wrap">
+                <div class="search-tabs">
+                    <div class="tab active">资源统一检索</div>
+                    <div class="tab">SPIS学术资源</div>
+                    <div class="tab">馆藏查询</div>
+                    <div class="tab">SCI</div>
+                    <div class="tab">EI</div>
+                    <div class="tab">百度文库</div>
+                </div>
+                <div class="search-bar">
+                    <div class="seg">全部 ▾</div>
+                    <input class="search-input" placeholder="请输入你的检索内容">
+                    <button class="search-btn">检索</button>
+                </div>
+            </section>
+
+            <!-- 右侧统计小部件 -->
+            <aside class="right-widgets">
+                <div class="widget">
+                    <h4>电子资源增量</h4>
+                    <div class="muted">周增量</div>
+                    <div style="font-size:28px;font-weight:800;margin:2px 0 6px;">98,811</div>
+                    <div class="muted">月增量 614,897</div>
+                </div>
+                <div class="widget">
+                    <h4>数据库访问量</h4>
+                    <div class="muted">月访问量</div>
+                    <div style="font-size:28px;font-weight:800;margin:2px 0 6px;">2,008,87</div>
+                    <div class="muted">年访问量 7,194,766</div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- 底部功能快捷 -->
+        <section class="bottom-features">
+            <div class="feature">馆藏图书</div>
+            <div class="feature">数字资源</div>
+            <div class="feature">试用资源</div>
+            <div class="feature">学位论文</div>
+            <div class="feature">期刊导航</div>
+            <div class="feature">考研导航</div>
+        </section>
+    </main>
+
+    <!-- 六边形轮播图模块 -->
+    <section class="hexagon-carousel-wrapper">
+        <div class="hexagon-carousel-container" id="hexagonCarouselContainer">
+            <ul class="hexagon-carousel" id="hexagonCarousel">
+                <li>
+                    <a href="">
+                        <div class="hexagon-image-wrapper">
+                            <img src="./img/hexagon-picCycle1.png" alt="轮播图1">
+                            <div class="hexagon-overlay"></div>
+                            <div class="hexagon-text">
+                                <h3>标题文字1</h3>
+                                <p>描述文字内容</p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="hexagon-image-wrapper">
+                            <img src="./img/hexagon-picCycle2.png" alt="轮播图2">
+                            <div class="hexagon-overlay"></div>
+                            <div class="hexagon-text">
+                                <h3>标题文字2</h3>
+                                <p>描述文字内容</p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="hexagon-image-wrapper">
+                            <img src="./img/hexagon-picCycle1.png" alt="轮播图3">
+                            <div class="hexagon-overlay"></div>
+                            <div class="hexagon-text">
+                                <h3>标题文字3</h3>
+                                <p>描述文字内容</p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="hexagon-image-wrapper">
+                            <img src="./img/hexagon-picCycle1.png" alt="轮播图4">
+                            <div class="hexagon-overlay"></div>
+                            <div class="hexagon-text">
+                                <h3>标题文字4</h3>
+                                <p>描述文字内容</p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="hexagon-image-wrapper">
+                            <img src="./img/hexagon-picCycle1.png" alt="轮播图5">
+                            <div class="hexagon-overlay"></div>
+                            <div class="hexagon-text">
+                                <h3>标题文字5</h3>
+                                <p>描述文字内容</p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="hexagon-image-wrapper">
+                            <img src="./img/hexagon-picCycle1.png" alt="轮播图6">
+                            <div class="hexagon-overlay"></div>
+                            <div class="hexagon-text">
+                                <h3>标题文字6</h3>
+                                <p>描述文字内容</p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- 轮播控制按钮 -->
+        <div class="hexagon-controls">
+            <button class="hexagon-btn hexagon-btn-prev" id="hexagonPrevBtn">
+                <i class="iconfont icon-fanhui"></i>
+            </button>
+            <button class="hexagon-btn hexagon-btn-next" id="hexagonNextBtn">
+                <i class="iconfont icon-gengduo"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <!-- 顶部区域 -->
+            <div class="footer-top">
+                <!-- 左侧Logo和名称 -->
+                <div class="footer-logo-section">
+                    <img src="img/S-logo.png" alt="Logo" class="footer-logo">
+                    <div class="footer-logo-text">
+                        <div class="footer-logo-cn">江西理工大学图书馆</div>
+                        <div class="footer-logo-en">JIANGXI UNIVERSITY OF SCIENCE AND TECHNOLOGY LIBRARY</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 中间区域 -->
+            <div class="footer-middle">
+                <!-- 左侧联系方式 -->
+                <div class="footer-contact">
+                    <h3 class="footer-section-title">联系方式</h3>
+                    <div class="footer-contact-item">
+                        <span class="footer-icon">📍</span>
+                        <span>详细地址:江西省赣州市红旗大道86号</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="footer-icon">📞</span>
+                        <span>咨询电话:0797-8312244(办公室)</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="footer-icon">📞</span>
+                        <span>咨询电话:0797-8312104(技术部)</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="footer-icon">✉️</span>
+                        <span>邮编:341000</span>
+                    </div>
+                </div>
+
+                <!-- 中间二维码区域 -->
+                <div class="footer-qrcodes">
+                    <div class="qrcode-item">
+                        <div class="qrcode-placeholder">二维码</div>
+                        <span>官方微信</span>
+                    </div>
+                    <div class="qrcode-item">
+                        <div class="qrcode-placeholder">二维码</div>
+                        <span>全球学术快报</span>
+                    </div>
+                    <div class="qrcode-item">
+                        <div class="qrcode-placeholder">二维码</div>
+                        <span>学习通</span>
+                    </div>
+                    <div class="qrcode-item">
+                        <div class="qrcode-placeholder">二维码</div>
+                        <span>维普考试</span>
+                    </div>
+                </div>
+
+                <!-- 右侧快捷按钮 -->
+                <div class="footer-quick-btns">
+                    <a href="#" class="footer-quick-btn footer-quick-btn-orange">
+                        <span class="footer-btn-icon">📊</span>
+                        <span>数据库</span>
+                    </a>
+                    <a href="#" class="footer-quick-btn footer-quick-btn-white">
+                        <span class="footer-btn-icon">📈</span>
+                        <span>运维数据</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 相关链接 -->
+            <div class="footer-links">
+                <h3 class="footer-section-title">相关链接</h3>
+                <div class="footer-links-grid">
+                    <a href="#" class="footer-link-btn">江西理工大学</a>
+                    <a href="#" class="footer-link-btn">江西省教育厅</a>
+                    <a href="#" class="footer-link-btn">中国图书馆学会</a>
+                    <a href="#" class="footer-link-btn">江西省图书馆</a>
+                    <a href="#" class="footer-link-btn">中国教育部</a>
+                    <a href="#" class="footer-link-btn">原中央苏区联盟馆</a>
+                    <a href="#" class="footer-link-btn">江西省高校图工委</a>
+                    <a href="#" class="footer-link-btn">江西理工机构知...</a>
+                </div>
+            </div>
+
+            <!-- 底部版权和统计 -->
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    Copyright © 2021 www.jxust.edu.cn 江西理工大学 All Rights Reserved
+                </div>
+                <div class="footer-stats">
+                    总访问量:9980980 月访问量:23321 今日访问量:1773
+                </div>
+            </div>
+        </div>
+
+        <!-- 回到顶部按钮 -->
+        <button class="footer-back-to-top" id="backToTop">
+            <span>↑</span>
+            <span>回到顶部</span>
+        </button>
+    </footer>
+
+    <script>
+        // 顶部时间显示
+        const nowText = document.getElementById('nowText');
+        function tick() {
+            const d = new Date();
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const date = String(d.getDate()).padStart(2, '0');
+            const fmt = `${year}年${month}月${date}日`;
+            nowText.textContent = fmt;
+        }
+        tick();
+        setInterval(tick, 60_000);
+
+        // 回到顶部功能
+        const backToTopBtn = document.getElementById('backToTop');
+        if (backToTopBtn) {
+            // 显示/隐藏按钮
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.style.display = 'flex';
+                } else {
+                    backToTopBtn.style.display = 'none';
+                }
+            });
+
+            // 点击回到顶部
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // 初始隐藏
+            backToTopBtn.style.display = 'none';
+        }
+
+        const login = document.querySelector('.login');
+        login.addEventListener('click',function(){
+            location.href='./login.html'
+        })
+
+    </script>
+    <script src="Js/lib-nav.js"></script>
+    <script src="Js/lib-search-tab.js"></script>
+    <script src="Js/hexagon.js"></script>
+    <script src="Js/lib-left-nav.js"></script>
+    <script src="Js/lib-picCycle.js"></script>
+</body>
+</html>
+
+
